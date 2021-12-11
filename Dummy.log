@@ -1,0 +1,13 @@
+['u1', 'u2', 'u3']
+['y1', 'y2', 'y3', 'ys']
+{0: <helics.HelicsInput(name = "_input_4", units = "X", injection_units = "", publication_type = "", type = "", target = "EXTERNAL/u1", info = "") at 0x7fa090031f40>, 1: <helics.HelicsInput(name = "_input_5", units = "X", injection_units = "", publication_type = "", type = "", target = "EXTERNAL/u2", info = "") at 0x7fa090031d90>, 2: <helics.HelicsInput(name = "_input_6", units = "X", injection_units = "", publication_type = "", type = "", target = "EXTERNAL/u3", info = "") at 0x7fa090081040>}
+{0: <helics.HelicsPublication(name = "Dummy/y1", type = "double", units = "X", info = "") at 0x7fa0a1924040>, 1: <helics.HelicsPublication(name = "Dummy/y2", type = "double", units = "X", info = "") at 0x7fa090031c40>, 2: <helics.HelicsPublication(name = "Dummy/y3", type = "double", units = "X", info = "") at 0x7fa090031b50>, 3: <helics.HelicsPublication(name = "Dummy/ys", type = "double", units = "X", info = "") at 0x7fa090031a60>}
+[2021-12-11 16:18:18.451] [console] [error] Dummy (131072)[t=-9223372036.854776]::Dummy sending->User pressed Ctrl-C
+[2021-12-11 16:18:18.451] [console] [error] Dummy_core_7hFToj (1879048192)[t=-98763.2]::Dummy sending->User pressed Ctrl-C
+[2021-12-11 16:18:18.451] [console] [error] Dummy_core_7hFToj (1879048192)[t=-98763.2]::Dummy_core_7hFToj sending-> User pressed Ctrl-C
+Traceback (most recent call last):
+  File "/home/argo/Desktop/Helics-FMI/helics_fmi.py", line 91, in <module>
+    h.helicsFederateEnterExecutingMode(fed)
+  File "/home/argo/.local/lib/python3.9/site-packages/helics/capi.py", line 4101, in helicsFederateEnterExecutingMode
+    raise HelicsException("[" + str(err.error_code) + "] " + ffi.string(err.message).decode())
+helics.capi.HelicsException: [-101] Dummy sending->User pressed Ctrl-C

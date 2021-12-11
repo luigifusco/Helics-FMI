@@ -1,0 +1,17 @@
+{
+  "name": "fundamental_default",
+  "federates": [
+    {
+      "directory": ".",
+      "exec": "helics_broker -f 2 --loglevel=warning",
+      "host": "localhost",
+      "name": "broker"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u helics_fmi.py Dummy",
+      "host": "localhost",
+      "name": "Dummy"
+    }
+  ]
+}
