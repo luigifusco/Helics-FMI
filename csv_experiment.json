@@ -1,0 +1,23 @@
+{
+  "name": "fundamental_default",
+  "federates": [
+    {
+      "directory": ".",
+      "exec": "helics_broker -f 2 --loglevel=warning",
+      "host": "localhost",
+      "name": "broker"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u helics_csv.py Meteo meteo_mosaik.csv '2015-09-23 00:00:00'",
+      "host": "localhost",
+      "name": "Meteo"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u helics_csv.py Meteo2 meteo_mosaik.csv '2015-09-23 00:00:00'",
+      "host": "localhost",
+      "name": "Meteo2"
+    }
+  ]
+}

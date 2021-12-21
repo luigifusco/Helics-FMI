@@ -12,6 +12,12 @@
       "exec": "python -u helics_fmi.py Dummy",
       "host": "localhost",
       "name": "Dummy"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u helics_fmi.py Yummy",
+      "host": "localhost",
+      "name": "Yummy"
     }
   ]
 }

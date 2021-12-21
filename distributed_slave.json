@@ -1,0 +1,12 @@
+{
+    "name": "fundamental_default",
+    "federates": [
+      {
+        "directory": ".",
+        "exec": "python -u helics_fmi.py Yummy --broker=tcp://localhost:5000",
+        "host": "localhost",
+        "name": "Yummy"
+      }
+    ]
+  }
+  

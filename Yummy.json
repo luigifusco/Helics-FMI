@@ -1,0 +1,10 @@
+{
+    "fmu": "Dummy.fmu",
+    "period": 45,
+    "total_interval": 604800,
+    "mappings": {
+        "u1": "Dummy/y1",
+        "u2": "Dummy/y2",
+        "u3": "Dummy/y3"
+    }
+}
