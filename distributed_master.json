@@ -1,9 +1,9 @@
 {
-    "name": "fundamental_default",
+    "name": "master",
     "federates": [
       {
         "directory": ".",
-        "exec": "helics_broker -f 2 --loglevel=warning --ipv4 --port=5000",
+        "exec": "helics_broker -f 2 --loglevel=warning --ipv4",
         "host": "localhost",
         "name": "broker"
       },

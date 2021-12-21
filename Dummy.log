@@ -1,9 +1,0 @@
-assert            | debug   | division leads to inf or nan at time 6720, (a=inf) / (b=0.1), where divisor b is: derivative.T
-assert            | debug   | division leads to inf or nan at time 6720, (a=inf) / (b=0.1), where divisor b is: derivative.T
-Traceback (most recent call last):
-  File "/home/argo/Desktop/Helics-FMI/helics_fmi.py", line 141, in <module>
-    var_value = fmu.get(var_name).item()
-  File "src/pyfmi/fmi.pyx", line 303, in pyfmi.fmi.ModelBase.get
-  File "src/pyfmi/fmi.pyx", line 4545, in pyfmi.fmi.FMUModelBase2._get
-  File "src/pyfmi/fmi.pyx", line 4210, in pyfmi.fmi.FMUModelBase2.get_real
-pyfmi.fmi.FMUException: Failed to get the Real values.
