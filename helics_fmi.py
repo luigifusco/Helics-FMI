@@ -22,6 +22,7 @@ def solver_call(solver, num=1):
         return command
 
 if __name__ == "__main__":
+
     command = None
 
     for option in sys.argv:

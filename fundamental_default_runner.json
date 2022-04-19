@@ -3,7 +3,7 @@
   "federates": [
     {
       "directory": ".",
-      "exec": "helics_broker -f 2 --loglevel=warning",
+      "exec": "helics_broker -f 2 --loglevel=summary",
       "host": "localhost",
       "name": "broker"
     },
