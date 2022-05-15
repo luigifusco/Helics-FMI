@@ -1,6 +1,8 @@
 {
     "fmu": "ShaderFMUExtraction_SmallApartment_64.fmu",
-    "period": 60,
-    "total_interval": 604800,
-    "mappings": {}
+    "period": 1,
+    "total_interval": 3600,
+    "mappings": {
+        "gridP": "PV/powerOutput.real"
+    }
 }

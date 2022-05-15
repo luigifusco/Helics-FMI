@@ -79,6 +79,9 @@ if __name__ == "__main__":
     inputs = [v.name for v in description.modelVariables if v.causality == 'input']
     outputs = [v.name for v in description.modelVariables if v.causality == 'output']
 
+    print('INPUTS:', inputs)
+    print('OUTPUTS:', outputs)
+
     pubid = {}
     for i in range(len(outputs)):
         pub_name = f"{sim_name}/{outputs[i]}"
@@ -124,6 +127,13 @@ if __name__ == "__main__":
     curtime = 0
     grantedtime = 0
 
+    logfile = open(sim_name + '.csv', 'w+')
+    header_line = 'helics_simulation_time'
+    for i in range(pub_count):
+        var_name = pubid[i].name.split('/')[1]
+        header_line += ',' + var_name
+    logfile.write(header_line+'\n')
+
     while grantedtime < total_interval:
 
         requested_time = grantedtime + update_interval
@@ -135,18 +145,28 @@ if __name__ == "__main__":
         for i in range(sub_count):
             var_value = h.helicsInputGetDouble((subid[i]))
             for var_name in reverse_mappings[subid[i].target]:
-                fmu.set(var_name, var_value)
+                try:
+                    fmu.set(var_name, var_value)
+                except Exception as e:
+                    print(e)
+
+        logline = str(grantedtime)
 
         for i in range(pub_count):
             var_name = pubid[i].name.split('/')[1]
             var_value = fmu.get(var_name).item()
+            logline += ','+ str(var_value)
             h.helicsPublicationPublishDouble(pubid[i], var_value)
+
+        logfile.write(logline+'\n')
 
 
     grantedtime = h.helicsFederateRequestTime(fed, h.HELICS_TIME_MAXTIME)
     status = h.helicsFederateDisconnect(fed)
     h.helicsFederateFree(fed)
     h.helicsCloseLibrary()
+
+    logfile.close()
 
     if command is not None:
         command.kill()

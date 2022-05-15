@@ -1,0 +1,9 @@
+{
+    "fmu": "Occupation/OccupationSmall.fmu",
+    "period": 60,
+    "total_interval": 86400,
+    "mappings": {
+        "Day": "CT/day",
+        "Month": "CT/month"
+    }
+}

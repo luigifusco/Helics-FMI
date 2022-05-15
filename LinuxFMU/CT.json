@@ -1,0 +1,6 @@
+{
+    "fmu": "Calendar/CalendarTime.fmu",
+    "period": 1,
+    "total_interval": 86400,
+    "mappings": {}
+}

@@ -1,0 +1,8 @@
+{
+    "fmu": "ShaderFMUExtraction_PV.fmu",
+    "period": 1,
+    "total_interval": 3600,
+    "mappings": {
+        "powerRequired": "Apartment/powerRequired"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "name": "shader",
+    "federates": [
+      {
+        "directory": ".",
+        "exec": "helics_broker -f 4 --loglevel=summary",
+        "host": "localhost",
+        "name": "broker"
+      },
+      {
+        "directory": ".",
+        "exec": "python -u ../helics_fmi.py CT",
+        "host": "localhost",
+        "name": "CT"
+      },
+      {
+        "directory": ".",
+        "exec": "python -u ../helics_fmi.py Apartment",
+        "host": "localhost",
+        "name": "Apartment"
+      },
+      {
+        "directory": ".",
+        "exec": "python -u ../helics_fmi.py OcSm",
+        "host": "localhost",
+        "name": "OcSm"
+      },
+      {
+        "directory": ".",
+        "exec": "python -u ../pv_sim/pv_sim_helics.py PV",
+        "host": "localhost",
+        "name": "PV"
+      }
+    ]
+  }
+  

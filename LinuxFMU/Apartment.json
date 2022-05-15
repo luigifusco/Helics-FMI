@@ -1,0 +1,20 @@
+{
+    "fmu": "SA_noPV_noOcc/SmallApartment_noPV_noOcc.fmu",
+    "period": 10,
+    "total_interval": 86400,
+    "mappings": {
+        "gridP": "PV/powerOutput.real",
+        "cooSea": "OcSm/CooSea",
+        "T_DHWSetpoint": "OcSm/TSetDHW",
+        "TimeOfDay": "CT/hour",
+        "Occupation[1]": "OcSm/Occupation[1]",
+        "TSetPoiZon[1]": "OcSm/TSetPoint[1]",
+        "TSetPoiZonSelCon[1]": "OcSm/TSetPointZonSelCol[1]",
+        "Occupation[2]": "OcSm/Occupation[2]",
+        "TSetPoiZon[2]": "OcSm/TSetPoint[2]",
+        "TSetPoiZonSelCon[2]": "OcSm/TSetPointZonSelCol[2]",
+        "Occupation[3]": "OcSm/Occupation[3]",
+        "TSetPoiZon[3]": "OcSm/TSetPoint[3]",
+        "TSetPoiZonSelCon[3]": "OcSm/TSetPointZonSelCol[3]"
+    }
+}

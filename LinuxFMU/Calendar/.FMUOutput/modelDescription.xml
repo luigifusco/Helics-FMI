@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="2.0"
+  modelName="CalendarTime"
+  guid="{7ff4db05-d294-41e5-b9a0-b6baceda8f98}"
+  version="1"
+  generationTool="Dymola Version 2021 (64-bit), 2020-04-17 (requires license to execute)"
+  generationDateAndTime="2022-05-09T06:55:03Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="128">
+  <CoSimulation
+    modelIdentifier="CalendarTime"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="true"
+    maxOutputDerivativeOrder="1"
+    canGetAndSetFMUstate="true"
+    canSerializeFMUstate="true"
+    providesDirectionalDerivative="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="s">
+      <BaseUnit s="1"/>
+      <DisplayUnit
+        name="h"
+        factor="0.0002777777777777778"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.IntegerOutput">
+      <Integer/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealOutput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Time">
+      <Real
+        quantity="Time"
+        unit="s"/>
+    </SimpleType>
+    <SimpleType
+      name="Buildings.Utilities.Time.Types.ZeroTime">
+      <Enumeration>
+        <Item name="UnixTimeStamp"
+          value="1"
+          description="Thu, 01 Jan 1970 00:00:00 local time"/>
+        <Item name="UnixTimeStampGMT"
+          value="2"
+          description="Thu, 01 Jan 1970 00:00:00 GMT"/>
+        <Item name="Custom"
+          value="3"
+          description="User specified local time"/>
+        <Item name="NY2010"
+          value="4"
+          description="New year 2010, 00:00:00 local time"/>
+        <Item name="NY2011"
+          value="5"
+          description="New year 2011, 00:00:00 local time"/>
+        <Item name="NY2012"
+          value="6"
+          description="New year 2012, 00:00:00 local time"/>
+        <Item name="NY2013"
+          value="7"
+          description="New year 2013, 00:00:00 local time"/>
+        <Item name="NY2014"
+          value="8"
+          description="New year 2014, 00:00:00 local time"/>
+        <Item name="NY2015"
+          value="9"
+          description="New year 2015, 00:00:00 local time"/>
+        <Item name="NY2016"
+          value="10"
+          description="New year 2016, 00:00:00 local time"/>
+        <Item name="NY2017"
+          value="11"
+          description="New year 2017, 00:00:00 local time"/>
+        <Item name="NY2018"
+          value="12"
+          description="New year 2018, 00:00:00 local time"/>
+        <Item name="NY2019"
+          value="13"
+          description="New year 2019, 00:00:00 local time"/>
+        <Item name="NY2020"
+          value="14"
+          description="New year 2020, 00:00:00 local time"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="3600.0"
+    tolerance="1E-06"/>
+  <ModelVariables>
+    <!-- Index for next variable = 1 -->
+    <ScalarVariable
+      name="zerTim"
+      valueReference="16777216"
+      description="Enumeration for choosing how reference time (time = 0) should be defined"
+      causality="parameter"
+      variability="fixed">
+      <Enumeration
+        declaredType="Buildings.Utilities.Time.Types.ZeroTime"
+        start="14"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 2 -->
+    <ScalarVariable
+      name="yearRef"
+      valueReference="16777217"
+      description="Year when time = 0, used if zerTim=Custom"
+      causality="parameter"
+      variability="fixed">
+      <Integer min="2010"
+        max="2031"
+        start="2016"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 3 -->
+    <ScalarVariable
+      name="outputUnixTimeStamp"
+      valueReference="100663296"
+      description="= true, to output the unix time stamp (using GMT reference)"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 4 -->
+    <ScalarVariable
+      name="timZon"
+      valueReference="16777218"
+      description="The local time zone, for computing the unix time stamp only"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="h"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 5 -->
+    <ScalarVariable
+      name="offset"
+      valueReference="16777219"
+      description="Offset that is added to &#39;time&#39;, may be used for computing time in different time zones"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="h"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 6 -->
+    <ScalarVariable
+      name="unixTimeStampLocal"
+      valueReference="335544320"
+      description="Unix time stamp at local time"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 7 -->
+    <ScalarVariable
+      name="year"
+      valueReference="335544321"
+      description="Year"
+      causality="output"
+      variability="discrete">
+      <Integer
+        declaredType="Modelica.Blocks.Interfaces.IntegerOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 8 -->
+    <ScalarVariable
+      name="month"
+      valueReference="335544322"
+      description="Month of the year"
+      causality="output"
+      variability="discrete">
+      <Integer
+        declaredType="Modelica.Blocks.Interfaces.IntegerOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 9 -->
+    <ScalarVariable
+      name="day"
+      valueReference="335544323"
+      description="Day of the month"
+      causality="output"
+      variability="discrete">
+      <Integer
+        declaredType="Modelica.Blocks.Interfaces.IntegerOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 10 -->
+    <ScalarVariable
+      name="hour"
+      valueReference="335544324"
+      description="Hour of the day"
+      causality="output"
+      variability="discrete">
+      <Integer
+        declaredType="Modelica.Blocks.Interfaces.IntegerOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 11 -->
+    <ScalarVariable
+      name="minute"
+      valueReference="335544325"
+      description="Minute of the hour"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 12 -->
+    <ScalarVariable
+      name="weekDay"
+      valueReference="335544326"
+      description="Integer output representing week day (monday = 1, sunday = 7)"
+      causality="output"
+      variability="discrete">
+      <Integer
+        declaredType="Modelica.Blocks.Interfaces.IntegerOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 13 -->
+    <ScalarVariable
+      name="firstYear"
+      valueReference="100663297"
+      description="First year that is supported, i.e. the first year in timeStampsNewYear[:]"
+      variability="constant">
+      <Integer start="2010"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 14 -->
+    <ScalarVariable
+      name="lastYear"
+      valueReference="100663298"
+      variability="constant">
+      <Integer start="2031"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 15 -->
+    <ScalarVariable
+      name="timeStampsNewYear[1]"
+      valueReference="100663299"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1262304000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 16 -->
+    <ScalarVariable
+      name="timeStampsNewYear[2]"
+      valueReference="100663300"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1293840000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 17 -->
+    <ScalarVariable
+      name="timeStampsNewYear[3]"
+      valueReference="100663301"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1325376000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 18 -->
+    <ScalarVariable
+      name="timeStampsNewYear[4]"
+      valueReference="100663302"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1356998400.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 19 -->
+    <ScalarVariable
+      name="timeStampsNewYear[5]"
+      valueReference="100663303"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1388534400.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 20 -->
+    <ScalarVariable
+      name="timeStampsNewYear[6]"
+      valueReference="100663304"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1420070400.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 21 -->
+    <ScalarVariable
+      name="timeStampsNewYear[7]"
+      valueReference="100663305"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1451606400.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 22 -->
+    <ScalarVariable
+      name="timeStampsNewYear[8]"
+      valueReference="100663306"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1483228800.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 23 -->
+    <ScalarVariable
+      name="timeStampsNewYear[9]"
+      valueReference="100663307"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1514764800.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 24 -->
+    <ScalarVariable
+      name="timeStampsNewYear[10]"
+      valueReference="100663308"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1546300800.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 25 -->
+    <ScalarVariable
+      name="timeStampsNewYear[11]"
+      valueReference="100663309"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1577836800.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 26 -->
+    <ScalarVariable
+      name="timeStampsNewYear[12]"
+      valueReference="100663310"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1609459200.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 27 -->
+    <ScalarVariable
+      name="timeStampsNewYear[13]"
+      valueReference="100663311"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1640995200.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 28 -->
+    <ScalarVariable
+      name="timeStampsNewYear[14]"
+      valueReference="100663312"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1672531200.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 29 -->
+    <ScalarVariable
+      name="timeStampsNewYear[15]"
+      valueReference="100663313"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1704067200.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 30 -->
+    <ScalarVariable
+      name="timeStampsNewYear[16]"
+      valueReference="100663314"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1735689600.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 31 -->
+    <ScalarVariable
+      name="timeStampsNewYear[17]"
+      valueReference="100663315"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1767225600.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 32 -->
+    <ScalarVariable
+      name="timeStampsNewYear[18]"
+      valueReference="100663316"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1798761600.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 33 -->
+    <ScalarVariable
+      name="timeStampsNewYear[19]"
+      valueReference="100663317"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1830297600.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 34 -->
+    <ScalarVariable
+      name="timeStampsNewYear[20]"
+      valueReference="100663318"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1861920000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 35 -->
+    <ScalarVariable
+      name="timeStampsNewYear[21]"
+      valueReference="100663319"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1893456000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 36 -->
+    <ScalarVariable
+      name="timeStampsNewYear[22]"
+      valueReference="100663320"
+      description="Epoch time stamps for new years day 2010 to 2031"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1924992000.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 37 -->
+    <ScalarVariable
+      name="isLeapYear[1]"
+      valueReference="100663321"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 38 -->
+    <ScalarVariable
+      name="isLeapYear[2]"
+      valueReference="100663322"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 39 -->
+    <ScalarVariable
+      name="isLeapYear[3]"
+      valueReference="100663323"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 40 -->
+    <ScalarVariable
+      name="isLeapYear[4]"
+      valueReference="100663324"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 41 -->
+    <ScalarVariable
+      name="isLeapYear[5]"
+      valueReference="100663325"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 42 -->
+    <ScalarVariable
+      name="isLeapYear[6]"
+      valueReference="100663326"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 43 -->
+    <ScalarVariable
+      name="isLeapYear[7]"
+      valueReference="100663327"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 44 -->
+    <ScalarVariable
+      name="isLeapYear[8]"
+      valueReference="100663328"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 45 -->
+    <ScalarVariable
+      name="isLeapYear[9]"
+      valueReference="100663329"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 46 -->
+    <ScalarVariable
+      name="isLeapYear[10]"
+      valueReference="100663330"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 47 -->
+    <ScalarVariable
+      name="isLeapYear[11]"
+      valueReference="100663331"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 48 -->
+    <ScalarVariable
+      name="isLeapYear[12]"
+      valueReference="100663332"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 49 -->
+    <ScalarVariable
+      name="isLeapYear[13]"
+      valueReference="100663333"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 50 -->
+    <ScalarVariable
+      name="isLeapYear[14]"
+      valueReference="100663334"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 51 -->
+    <ScalarVariable
+      name="isLeapYear[15]"
+      valueReference="100663335"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 52 -->
+    <ScalarVariable
+      name="isLeapYear[16]"
+      valueReference="100663336"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 53 -->
+    <ScalarVariable
+      name="isLeapYear[17]"
+      valueReference="100663337"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 54 -->
+    <ScalarVariable
+      name="isLeapYear[18]"
+      valueReference="100663338"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 55 -->
+    <ScalarVariable
+      name="isLeapYear[19]"
+      valueReference="100663339"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 56 -->
+    <ScalarVariable
+      name="isLeapYear[20]"
+      valueReference="100663340"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 57 -->
+    <ScalarVariable
+      name="isLeapYear[21]"
+      valueReference="100663341"
+      description="List of leap years starting from firstYear (2010), up to and including 2030"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 58 -->
+    <ScalarVariable
+      name="dayInMonth[1]"
+      valueReference="100663342"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 59 -->
+    <ScalarVariable
+      name="dayInMonth[2]"
+      valueReference="100663343"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="28"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 60 -->
+    <ScalarVariable
+      name="dayInMonth[3]"
+      valueReference="100663344"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 61 -->
+    <ScalarVariable
+      name="dayInMonth[4]"
+      valueReference="100663345"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="30"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 62 -->
+    <ScalarVariable
+      name="dayInMonth[5]"
+      valueReference="100663346"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 63 -->
+    <ScalarVariable
+      name="dayInMonth[6]"
+      valueReference="100663347"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="30"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 64 -->
+    <ScalarVariable
+      name="dayInMonth[7]"
+      valueReference="100663348"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 65 -->
+    <ScalarVariable
+      name="dayInMonth[8]"
+      valueReference="100663349"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 66 -->
+    <ScalarVariable
+      name="dayInMonth[9]"
+      valueReference="100663350"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="30"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 67 -->
+    <ScalarVariable
+      name="dayInMonth[10]"
+      valueReference="100663351"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 68 -->
+    <ScalarVariable
+      name="dayInMonth[11]"
+      valueReference="100663352"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="30"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 69 -->
+    <ScalarVariable
+      name="dayInMonth[12]"
+      valueReference="100663353"
+      description="Number of days in each month"
+      variability="constant">
+      <Integer start="31"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 70 -->
+    <ScalarVariable
+      name="timOff"
+      valueReference="100663354"
+      description="Time offset"
+      causality="calculatedParameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 71 -->
+    <ScalarVariable
+      name="monthRef"
+      valueReference="100663355"
+      description="Month when time = 0"
+      variability="constant">
+      <Integer min="1"
+        max="12"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 72 -->
+    <ScalarVariable
+      name="dayRef"
+      valueReference="100663356"
+      description="Day when time = 0"
+      variability="constant">
+      <Integer min="1"
+        max="31"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 73 -->
+    <ScalarVariable
+      name="daysSinceEpoch"
+      valueReference="369098813"
+      description="Number of days that passed since 1st of January 1970"
+      variability="discrete">
+      <Integer/>
+    </ScalarVariable>
+    <!-- Index for next variable = 74 -->
+    <ScalarVariable
+      name="yearIndex"
+      valueReference="369098814"
+      description="Index of the current year in timeStampsNewYear"
+      variability="discrete">
+      <Integer/>
+    </ScalarVariable>
+    <!-- Index for next variable = 75 -->
+    <ScalarVariable
+      name="epochLastMonth"
+      valueReference="369098815"
+      description="Unix time stamp of the beginning of the current month"
+      variability="discrete">
+      <Real
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 76 -->
+    <ScalarVariable
+      name="hourSampleStart"
+      valueReference="100663360"
+      description="Time when the sampling every hour starts"
+      causality="calculatedParameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 77 -->
+    <ScalarVariable
+      name="daySampleStart"
+      valueReference="100663361"
+      description="Time when the sampling every day starts"
+      causality="calculatedParameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 78 -->
+    <ScalarVariable
+      name="hourSampleTrigger"
+      valueReference="369098818"
+      description="True, if hourly sample time instant"
+      variability="discrete">
+      <Boolean/>
+    </ScalarVariable>
+    <!-- Index for next variable = 79 -->
+    <ScalarVariable
+      name="daySampleTrigger"
+      valueReference="369098819"
+      description="True, if daily sample time instant"
+      variability="discrete">
+      <Boolean/>
+    </ScalarVariable>
+    <!-- Index for next variable = 80 -->
+    <ScalarVariable
+      name="firstHourSampling"
+      valueReference="905969732"
+      description="=true if the hour is sampled the first time"
+      variability="discrete"
+      initial="exact">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 81 -->
+    <ScalarVariable
+      name="firstDaySampling"
+      valueReference="905969733"
+      description="=true if the day is sampled the first time"
+      variability="discrete"
+      initial="exact">
+      <Boolean start="true"/>
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="6"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="7"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="8"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="9"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="10"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="11"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="12"
+        dependencies=""
+        dependenciesKind=""/>
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="6"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="7"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="8"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="9"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="10"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="11"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="12"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="70"
+        dependencies="1 2 4 5"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="76"
+        dependencies="5"
+        dependenciesKind="dependent"/>
+      <Unknown index="77"
+        dependencies="5"
+        dependenciesKind="dependent"/>
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

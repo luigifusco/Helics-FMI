@@ -1,0 +1,1 @@
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2DoStep: dsblock_ failed, QiErr = 1
