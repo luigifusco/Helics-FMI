@@ -9,13 +9,13 @@
       },
       {
         "directory": ".",
-        "exec": "python -u helics_fmi.py Apartment",
+        "exec": "python -u helics_fmi.py Apartment --log",
         "host": "localhost",
         "name": "Apartment"
       },
       {
         "directory": ".",
-        "exec": "python -u pv_sim/pv_sim_helics.py PV",
+        "exec": "python -u helics_fmi.py PV --log",
         "host": "localhost",
         "name": "PV"
       }

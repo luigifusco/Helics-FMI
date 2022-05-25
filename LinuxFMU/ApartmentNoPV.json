@@ -1,0 +1,31 @@
+{
+    "fmu": "SA_noPV/SmallApartment_noPV.fmu",
+    "period": 30,
+    "total_interval": 8812800,
+    "start_time": 8640000,
+    "mappings": {
+        "gridP": "PolimiPV/powerOutput.real"
+    },
+    "log_vars": [
+        "heatPump.ElectricalConsumption_HeatPump",
+        "heatPump.T_Return",
+        "heatPump.QflowHPvol",
+        "heatPump.StandbyHeatLoss",
+        "heatPump.COP",
+        "apartment.DayZon.TRooAir",
+        "apartment.DayZon.occupation",
+        "thermostatDayZ.TSetHea.y[1]",
+        "apartment.DayZon.RadiantSlab.surf_a.Q_flow",
+        "apartment.DayZon.RHroom",
+        "apartment.NigZone.TRooAir",
+        "apartment.NigZone.occupation",
+        "thermostatNigZ.TSetHea.y[1]",
+        "apartment.NigZone.RadiantSlab.surf_a.Q_flow",
+        "apartment.NigZone.RHroom",
+        "apartment.Bathroom.TRooAir",
+        "apartment.Bathroom.occupation",
+        "thermostatBathroom.TSetHea.y[1]",
+        "apartment.Bathroom.RadiantSlab.surf_a.Q_flow",
+        "apartment.Bathroom.RHroom"
+    ]
+}

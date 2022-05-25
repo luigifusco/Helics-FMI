@@ -4,5 +4,8 @@
     "total_interval": 3600,
     "mappings": {
         "gridP": "PV/powerOutput.real"
-    }
+    },
+    "log_vars": [
+        "powerRequired"
+    ]
 }

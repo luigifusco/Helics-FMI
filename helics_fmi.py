@@ -24,10 +24,13 @@ def solver_call(solver, num=1):
 if __name__ == "__main__":
 
     command = None
+    logg = False
 
     for option in sys.argv:
         if option == '--matlab':
             command = solver_call('matlab')
+        if option == '--log':
+            logg = True
 
     sim_name = sys.argv[1]
 
@@ -44,6 +47,9 @@ if __name__ == "__main__":
     fmiVersion = json_config.get('fmiVersion', '2.0')
     start_time = json_config.get('start_time', 0)
     total_interval = json_config.get('total_interval', 0)
+    log_vars = json_config.get('log_vars', [])
+    if log_vars == []:
+        logg = False
     if start_vrs:
         fmu.set(list(start_vrs.keys()), list(start_vrs.values()))
 
@@ -124,22 +130,26 @@ if __name__ == "__main__":
 
     hours = 24 * 7
     update_interval = int(h.helicsFederateGetTimeProperty(fed, h.HELICS_PROPERTY_TIME_PERIOD))
-    curtime = 0
-    grantedtime = 0
+    curtime = start_time
+    grantedtime = h.helicsFederateRequestTime(fed, start_time)
 
-    logfile = open(sim_name + '.csv', 'w+')
-    header_line = 'helics_simulation_time'
-    for i in range(pub_count):
-        var_name = pubid[i].name.split('/')[1]
-        header_line += ',' + var_name
-    logfile.write(header_line+'\n')
+    if logg:
+        logfile = open(sim_name + '.csv', 'w+')
+        header_line = 'helics_simulation_time'
+        for i in log_vars:
+            header_line += ',' + i
+        logfile.write(header_line+'\n')
+
+    ErrorDict=['FMI_OK', 'FMI_WARNING', 'FMI_DISCARD', 'FMI_ERROR','FMI_FATAL','FMI_PENDING']
 
     while grantedtime < total_interval:
 
         requested_time = grantedtime + update_interval
         grantedtime = h.helicsFederateRequestTime(fed, requested_time)
 
-        fmu.do_step(current_t=curtime, step_size=grantedtime - curtime, new_step=True)
+        status = fmu.do_step(current_t=curtime, step_size=grantedtime - curtime, new_step=True)
+        if status > 0:
+            print('error in do_step function: ' + ErrorDict[status])
         curtime = grantedtime
 
         for i in range(sub_count):
@@ -150,23 +160,34 @@ if __name__ == "__main__":
                 except Exception as e:
                     print(e)
 
-        logline = str(grantedtime)
-
         for i in range(pub_count):
             var_name = pubid[i].name.split('/')[1]
-            var_value = fmu.get(var_name).item()
-            logline += ','+ str(var_value)
-            h.helicsPublicationPublishDouble(pubid[i], var_value)
+            try:
+                var_value = fmu.get(var_name).item()
+                h.helicsPublicationPublishDouble(pubid[i], var_value)
+            except Exception as e:
+                print(e)
 
-        logfile.write(logline+'\n')
+        if logg:
+            logline = str(grantedtime)
 
+            for i in log_vars:
+                try:
+                    var_value = fmu.get(i).item()
+                    logline += ','+ str(var_value)
+                except Exception:
+                    logline += ',-1'
 
+            logfile.write(logline+'\n')
+
+    
     grantedtime = h.helicsFederateRequestTime(fed, h.HELICS_TIME_MAXTIME)
     status = h.helicsFederateDisconnect(fed)
     h.helicsFederateFree(fed)
     h.helicsCloseLibrary()
 
-    logfile.close()
+    if logg:
+        logfile.close()
 
     if command is not None:
         command.kill()

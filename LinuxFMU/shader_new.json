@@ -15,7 +15,7 @@
       },
       {
         "directory": ".",
-        "exec": "python -u ../helics_fmi.py Apartment",
+        "exec": "python -u ../helics_fmi.py Apartment --log",
         "host": "localhost",
         "name": "Apartment"
       },

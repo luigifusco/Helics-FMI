@@ -1,0 +1,344 @@
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: 103112.049
+  Failed condition: apartment.NigZone.infAndNatVel.t1_Element.S <= 100000.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.009909*apartment.DayZon.AHU.hex.state_a1_inflow.T/(0.009909*apartment.DayZon.AHU.hex.hA.T0_a1)) ^ (0.78) = (-14795.8) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   In SmallApartment_noPV.apartment.DayZon.AHU.hex.bal1.vol:
+   The heat flow rate equals -7.44571e+06 W and the mass flow rate equals 0.009909 kg/s,
+   which results in a temperature difference 740640 K > dTMax=200 K.
+   This may indicate that energy is not conserved for small mass flow rates.
+   The implementation may require prescribedHeatFlowRate = false.
+  Failed condition: noEvent(abs(apartment.DayZon.AHU.Q_flow) < 2010.615372)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.009909*apartment.DayZon.AHU.hex.state_a1_inflow.T/(0.009909*apartment.DayZon.AHU.hex.hA.T0_a1)) ^ (0.78) = (-590.824) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   In SmallApartment_noPV.apartment.DayZon.AHU.hex.bal1.vol:
+   The heat flow rate equals -297158 W and the mass flow rate equals 0.009909 kg/s,
+   which results in a temperature difference 29558.9 K > dTMax=200 K.
+   This may indicate that energy is not conserved for small mass flow rates.
+   The implementation may require prescribedHeatFlowRate = false.
+  Failed condition: noEvent(abs(apartment.DayZon.AHU.Q_flow) < 2010.615372)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.009909*apartment.DayZon.AHU.hex.state_a1_inflow.T/(0.009909*apartment.DayZon.AHU.hex.hA.T0_a1)) ^ (0.78) = (-22.6252) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 2475.89 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -495.167 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 99.0453 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -19.7971 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 3.97141 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: 103130.572
+  Failed condition: apartment.DayZon.infAndNatVel.t1_Element.S <= 100000.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: -20626.11321
+  Failed condition: apartment.DayZon.infAndNatVel.t1_Element.S >= -0.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: -103130.572
+  Failed condition: apartment.DayZon.infAndNatVel.t1_Element1.S >= -100000.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: 20626.11321
+  Failed condition: apartment.DayZon.infAndNatVel.t1_Element1.S <= 0.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 1.04287e+07 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -2.08575e+06 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 417150 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -83430 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 16686 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.DayZon.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.008086499999999998*apartment.NigZone.AHU.hex.state_a1_inflow.T/(0.008086499999999998*apartment.NigZone.AHU.hex.hA.T0_a1)) ^ (0.78) = (-14894.5) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   In SmallApartment_noPV.apartment.NigZone.AHU.hex.bal1.vol:
+   The heat flow rate equals -6.11729e+06 W and the mass flow rate equals 0.0080865 kg/s,
+   which results in a temperature difference 745641 K > dTMax=200 K.
+   This may indicate that energy is not conserved for small mass flow rates.
+   The implementation may require prescribedHeatFlowRate = false.
+  Failed condition: noEvent(abs(apartment.NigZone.AHU.Q_flow) < 1640.8155419999996)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.008086499999999998*apartment.NigZone.AHU.hex.state_a1_inflow.T/(0.008086499999999998*apartment.NigZone.AHU.hex.hA.T0_a1)) ^ (0.78) = (-594.772) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   In SmallApartment_noPV.apartment.NigZone.AHU.hex.bal1.vol:
+   The heat flow rate equals -244144 W and the mass flow rate equals 0.0080865 kg/s,
+   which results in a temperature difference 29758.8 K > dTMax=200 K.
+   This may indicate that energy is not conserved for small mass flow rates.
+   The implementation may require prescribedHeatFlowRate = false.
+  Failed condition: noEvent(abs(apartment.NigZone.AHU.Q_flow) < 1640.8155419999996)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.008086499999999998*apartment.NigZone.AHU.hex.state_a1_inflow.T/(0.008086499999999998*apartment.NigZone.AHU.hex.hA.T0_a1)) ^ (0.78) = (-22.7831) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 2802.12 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -560.412 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 112.094 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -22.4069 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 4.49338 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.supplyAir.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: 103112.049
+  Failed condition: apartment.NigZone.infAndNatVel.t1_Element.S <= 100000.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: -20622.40883
+  Failed condition: apartment.NigZone.infAndNatVel.t1_Element.S >= -0.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: -103112.049
+  Failed condition: apartment.NigZone.infAndNatVel.t1_Element1.S >= -100000.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: 20622.40883
+  Failed condition: apartment.NigZone.infAndNatVel.t1_Element1.S <= 0.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 1.27721e+07 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -2.55442e+06 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 510883 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -102177 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 20435.3 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.NigZone.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.0020925*apartment.Bathroom.AHU.hex.state_a1_inflow.T/(0.0020925*apartment.Bathroom.AHU.hex.hA.T0_a1)) ^ (0.78) = (-16693.3) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   In SmallApartment_noPV.apartment.Bathroom.AHU.hex.bal1.vol:
+   The heat flow rate equals -1.77367e+06 W and the mass flow rate equals 0.0020925 kg/s,
+   which results in a temperature difference 835482 K > dTMax=200 K.
+   This may indicate that energy is not conserved for small mass flow rates.
+   The implementation may require prescribedHeatFlowRate = false.
+  Failed condition: noEvent(abs(apartment.Bathroom.AHU.Q_flow) < 424.58499000000006)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.0020925*apartment.Bathroom.AHU.hex.state_a1_inflow.T/(0.0020925*apartment.Bathroom.AHU.hex.hA.T0_a1)) ^ (0.78) = (-666.726) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   In SmallApartment_noPV.apartment.Bathroom.AHU.hex.bal1.vol:
+   The heat flow rate equals -70800.9 W and the mass flow rate equals 0.0020925 kg/s,
+   which results in a temperature difference 33350.6 K > dTMax=200 K.
+   This may indicate that energy is not conserved for small mass flow rates.
+   The implementation may require prescribedHeatFlowRate = false.
+  Failed condition: noEvent(abs(apartment.Bathroom.AHU.Q_flow) < 424.58499000000006)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error] 
+Model error - power: (0.0020925*apartment.Bathroom.AHU.hex.state_a1_inflow.T/(0.0020925*apartment.Bathroom.AHU.hex.hA.T0_a1)) ^ (0.78) = (-25.6612) ^ (0.78)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 7876.85 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.floExc.sta_a2_inflow.X[1] >= -1E-05) and noEvent(apartment.floExc.sta_a2_inflow.X[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -1575.36 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.floExc.sta_a2_inflow.X[1] >= -1E-05) and noEvent(apartment.floExc.sta_a2_inflow.X[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 315.083 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.floExc.sta_a2_inflow.X[1] >= -1E-05) and noEvent(apartment.floExc.sta_a2_inflow.X[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -63.0047 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.floExc.sta_a2_inflow.X[1] >= -1E-05) and noEvent(apartment.floExc.sta_a2_inflow.X[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 12.6129 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.floExc.sta_a2_inflow.X[1] >= -1E-05) and noEvent(apartment.floExc.sta_a2_inflow.X[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: 103028.6957
+  Failed condition: apartment.Bathroom.infAndNatVel.t1_Element.S <= 100000.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: -20605.73913
+  Failed condition: apartment.Bathroom.infAndNatVel.t1_Element.S >= -0.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: -103028.6957
+  Failed condition: apartment.Bathroom.infAndNatVel.t1_Element1.S >= -100000.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Value for variable, with non-reversible flow according to min/max bound, is: 20605.73913
+  Failed condition: apartment.Bathroom.infAndNatVel.t1_Element1.S <= 0.5
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 4.92683e+07 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -9.85366e+06 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 1.97073e+06 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = -394146 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
+FMIL: module = Model, log level = 2: [][FMU status:Error] Error: The following error was detected at time: 8640030.000000095
+FMIL: module = Model, log level = 2: [][FMU status:Error]   Mass fraction X[1] = 78829.3 of substance water
+of medium "Buildings.Media.Air" is not in the range 0..1
+  Failed condition: noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] >= -1E-05) and noEvent(apartment.Bathroom.AHU.port_a2.Xi_outflow[1] <= 1.00001)
+
+FMIL: module = Model, log level = 2: [][FMU status:Error] fmi2GetDerivatives: dsblock_ failed, QiErr = 1
