@@ -4,6 +4,7 @@ import sys
 from fmpy import dump, read_model_description
 from pyfmi import load_fmu
 import pyfmi.fmi
+from time import time
 
 import json
 
@@ -25,13 +26,19 @@ if __name__ == "__main__":
 
     command = None
     logg = False
+    gettimes = False
+
+    times = {}
 
     for option in sys.argv:
         if option == '--matlab':
             command = solver_call('matlab')
         if option == '--log':
             logg = True
+        if option == '--time':
+            gettimes = True
 
+    init_time = time()
     sim_name = sys.argv[1]
 
     with open(sim_name+'.json') as file:
@@ -52,6 +59,7 @@ if __name__ == "__main__":
         logg = False
     if start_vrs:
         fmu.set(list(start_vrs.keys()), list(start_vrs.values()))
+
 
     if fmiVersion == '2.0':
         fmu.setup_experiment(start_time=start_time, stop_time=total_interval)
@@ -84,9 +92,6 @@ if __name__ == "__main__":
     description = read_model_description(json_config['fmu'])
     inputs = [v.name for v in description.modelVariables if v.causality == 'input']
     outputs = [v.name for v in description.modelVariables if v.causality == 'output']
-
-    print('INPUTS:', inputs)
-    print('OUTPUTS:', outputs)
 
     pubid = {}
     for i in range(len(outputs)):
@@ -124,8 +129,11 @@ if __name__ == "__main__":
         pubid[i] = h.helicsFederateGetPublicationByIndex(fed, i)
         pub_name = h.helicsPublicationGetName(pubid[i])
 
-
+    times['init_time'] = time() - init_time
     ##############  Entering Execution Mode  ##################################
+    time['steps'] = []
+    time['waits'] = []
+    wait_time = -1
     h.helicsFederateEnterExecutingMode(fed)
 
     hours = 24 * 7
@@ -143,6 +151,9 @@ if __name__ == "__main__":
     ErrorDict=['FMI_OK', 'FMI_WARNING', 'FMI_DISCARD', 'FMI_ERROR','FMI_FATAL','FMI_PENDING']
 
     while grantedtime < total_interval:
+        if wait_time > 0:
+            times['waits'].append(time() - wait_time)
+        step_time = time()
 
         requested_time = grantedtime + update_interval
         grantedtime = h.helicsFederateRequestTime(fed, requested_time)
@@ -168,6 +179,8 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
 
+        times['steps'].append(time() - step_time)
+
         if logg:
             logline = str(grantedtime)
 
@@ -180,6 +193,8 @@ if __name__ == "__main__":
 
             logfile.write(logline+'\n')
 
+        wait_time = time()
+
     
     grantedtime = h.helicsFederateRequestTime(fed, h.HELICS_TIME_MAXTIME)
     status = h.helicsFederateDisconnect(fed)
@@ -188,6 +203,10 @@ if __name__ == "__main__":
 
     if logg:
         logfile.close()
+
+    if gettimes:
+        with open(sim_name + '_times.json', 'w+') as timefile:
+            json.dump(times, timefile)
 
     if command is not None:
         command.kill()

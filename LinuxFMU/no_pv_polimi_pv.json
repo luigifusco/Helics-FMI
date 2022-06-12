@@ -9,13 +9,13 @@
       },
       {
         "directory": ".",
-        "exec": "python -u ../helics_fmi.py ApartmentNoPV",
+        "exec": "python -u ../helics_fmi.py ApartmentNoPV --time",
         "host": "localhost",
         "name": "ApartmentNoPV"
       },
       {
         "directory": ".",
-        "exec": "python -u ../helics_fmi.py PolimiPV",
+        "exec": "python -u ../helics_fmi.py PolimiPV --time",
         "host": "localhost",
         "name": "PolimiPV"
       }
