@@ -1,6 +1,6 @@
 {
     "fmu": "SA_noPV/SmallApartment_noPV.fmu",
-    "period": 3600,
+    "period": 60,
     "total_interval": 8812800,
     "start_time": 8640000,
     "mappings": {

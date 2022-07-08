@@ -1,0 +1,3006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="2.0"
+  modelName="PV_noWeather"
+  guid="{fd5bd51b-5bdf-4347-8edd-e07ab21812b3}"
+  version="1"
+  generationTool="Dymola Version 2021 (64-bit), 2020-04-17 (requires license to execute)"
+  generationDateAndTime="2022-06-11T14:06:12Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="2">
+  <CoSimulation
+    modelIdentifier="PV_noWeather"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="true"
+    maxOutputDerivativeOrder="1"
+    canGetAndSetFMUstate="true"
+    canSerializeFMUstate="true"
+    providesDirectionalDerivative="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="1"/>
+    <Unit
+      name="A">
+      <BaseUnit A="1"/>
+    </Unit>
+    <Unit
+      name="C">
+      <BaseUnit s="1"
+        A="1"/>
+    </Unit>
+    <Unit
+      name="Hz">
+      <BaseUnit s="-1"/>
+    </Unit>
+    <Unit
+      name="Ohm">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"
+        A="-2"/>
+    </Unit>
+    <Unit
+      name="S">
+      <BaseUnit kg="-1"
+        m="-2"
+        s="3"
+        A="2"/>
+    </Unit>
+    <Unit
+      name="V">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"
+        A="-1"/>
+    </Unit>
+    <Unit
+      name="W">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"/>
+    </Unit>
+    <Unit
+      name="W/m2">
+      <BaseUnit kg="1"
+        s="-3"/>
+    </Unit>
+    <Unit
+      name="Wb">
+      <BaseUnit kg="1"
+        m="2"
+        s="-2"
+        A="-1"/>
+    </Unit>
+    <Unit
+      name="m">
+      <BaseUnit m="1"/>
+    </Unit>
+    <Unit
+      name="m2">
+      <BaseUnit m="2"/>
+    </Unit>
+    <Unit
+      name="rad">
+      <BaseUnit rad="1"/>
+      <DisplayUnit
+        name="deg"
+        factor="57.29577951308232"/>
+    </Unit>
+    <Unit
+      name="rad-3">
+      <BaseUnit rad="-3"/>
+    </Unit>
+    <Unit
+      name="rad/s">
+      <BaseUnit s="-1"
+        rad="1"/>
+    </Unit>
+    <Unit
+      name="s">
+      <BaseUnit s="1"/>
+    </Unit>
+    <Unit
+      name="var">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType
+      name="Buildings.Electrical.PhaseSystems.PartialPhaseSystem.ReferenceAngle">
+      <Real
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealInput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealOutput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Admittance">
+      <Real
+        quantity="Conductance"
+        unit="S"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Angle">
+      <Real
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.AngularVelocity">
+      <Real
+        quantity="AngularVelocity"
+        unit="rad/s"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Area">
+      <Real
+        quantity="Area"
+        unit="m2"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Current">
+      <Real
+        quantity="ElectricCurrent"
+        unit="A"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.ElectricCharge">
+      <Real
+        quantity="ElectricCharge"
+        unit="C"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Frequency">
+      <Real
+        quantity="Frequency"
+        unit="Hz"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Impedance">
+      <Real
+        quantity="Resistance"
+        unit="Ohm"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Irradiance">
+      <Real
+        quantity="Irradiance"
+        unit="W/m2"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.MagneticFlux">
+      <Real
+        quantity="MagneticFlux"
+        unit="Wb"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Power">
+      <Real
+        quantity="Power"
+        unit="W"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.ReactivePower">
+      <Real
+        quantity="Power"
+        unit="var"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Voltage">
+      <Real
+        quantity="ElectricPotential"
+        unit="V"/>
+    </SimpleType>
+    <SimpleType
+      name="Buildings.Electrical.Types.InitMode">
+      <Enumeration>
+        <Item name="zero_current"
+          value="1"
+          description="Assume i=0 during homotopy initialization"/>
+        <Item name="linearized"
+          value="2"
+          description="Uses linear model during homotopy initialization"/>
+      </Enumeration>
+    </SimpleType>
+    <SimpleType
+      name="Buildings.Electrical.Types.Load">
+      <Enumeration>
+        <Item name="FixedZ_steady_state"
+          value="1"
+          description="Fixed Z, steady-state"/>
+        <Item name="FixedZ_dynamic"
+          value="2"
+          description="Fixed Z, dynamic"/>
+        <Item name="VariableZ_P_input"
+          value="3"
+          description="Variable Z, P input"/>
+        <Item name="VariableZ_y_input"
+          value="4"
+          description="Variable Z, y input"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="31536000.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <!-- Index for next variable = 1 -->
+    <ScalarVariable
+      name="grid.terminal.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 2 -->
+    <ScalarVariable
+      name="grid.terminal.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 3 -->
+    <ScalarVariable
+      name="grid.terminal.i[1]"
+      valueReference="369098754"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 4 -->
+    <ScalarVariable
+      name="grid.terminal.i[2]"
+      valueReference="369098755"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 5 -->
+    <ScalarVariable
+      name="grid.terminal.theta[1]"
+      valueReference="905969697"
+      description="Optional vector of phase angles">
+      <Real
+        declaredType="Buildings.Electrical.PhaseSystems.PartialPhaseSystem.ReferenceAngle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 6 -->
+    <ScalarVariable
+      name="grid.f"
+      valueReference="16777216"
+      description="Frequency of the source"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Frequency"
+        start="50"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 7 -->
+    <ScalarVariable
+      name="grid.V"
+      valueReference="16777217"
+      description="RMS voltage of the source"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"
+        start="230"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 8 -->
+    <ScalarVariable
+      name="grid.phiSou"
+      valueReference="16777218"
+      description="Phase shift angle of the source"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 9 -->
+    <ScalarVariable
+      name="grid.P.real"
+      valueReference="335544320"
+      description="Real power">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 10 -->
+    <ScalarVariable
+      name="grid.P.apparent"
+      valueReference="905969668"
+      description="Apparent power">
+      <Real
+        declaredType="Modelica.SIunits.ReactivePower"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 11 -->
+    <ScalarVariable
+      name="grid.P.phi"
+      valueReference="905969669"
+      description="Phase shift">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 12 -->
+    <ScalarVariable
+      name="grid.P.cosPhi"
+      valueReference="905969670"
+      description="Power factor">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 13 -->
+    <ScalarVariable
+      name="grid.sou.potentialReference"
+      valueReference="100663303"
+      description="Serve as potential root for the reference angle theta"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 14 -->
+    <ScalarVariable
+      name="grid.sou.definiteReference"
+      valueReference="100663304"
+      description="Serve as definite root for the reference angle theta"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 15 -->
+    <ScalarVariable
+      name="grid.sou.S[1]"
+      valueReference="369098761"
+      description="Complex power S[1] = P, S[2]= Q">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 16 -->
+    <ScalarVariable
+      name="grid.sou.S[2]"
+      valueReference="905969674"
+      description="Complex power S[1] = P, S[2]= Q">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 17 -->
+    <ScalarVariable
+      name="grid.sou.phi"
+      valueReference="905969669"
+      description="Phase shift with respect to reference angle">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 18 -->
+    <ScalarVariable
+      name="grid.sou.terminal.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 19 -->
+    <ScalarVariable
+      name="grid.sou.terminal.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 20 -->
+    <ScalarVariable
+      name="grid.sou.terminal.i[1]"
+      valueReference="369098754"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 21 -->
+    <ScalarVariable
+      name="grid.sou.terminal.i[2]"
+      valueReference="369098755"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 22 -->
+    <ScalarVariable
+      name="grid.sou.terminal.theta[1]"
+      valueReference="905969697"
+      description="Optional vector of phase angles">
+      <Real
+        declaredType="Buildings.Electrical.PhaseSystems.PartialPhaseSystem.ReferenceAngle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 23 -->
+    <ScalarVariable
+      name="grid.sou.f"
+      valueReference="100663307"
+      description="Frequency of the source"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Frequency"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 24 -->
+    <ScalarVariable
+      name="grid.sou.V"
+      valueReference="100663308"
+      description="RMS voltage of the source"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 25 -->
+    <ScalarVariable
+      name="grid.sou.phiSou"
+      valueReference="100663309"
+      description="Phase shift of the source"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 26 -->
+    <ScalarVariable
+      name="grid.sou.thetaRel"
+      valueReference="100663310"
+      description="Absolute angle of rotating system as offset to thetaRef"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 27 -->
+    <ScalarVariable
+      name="RL.linearized"
+      valueReference="100663311"
+      description="If true, the load model is linearized"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 28 -->
+    <ScalarVariable
+      name="RL.mode"
+      valueReference="100663312"
+      description="Type of load model (e.g., steady state, dynamic, prescribed power consumption, etc.)"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.Electrical.Types.Load"
+        start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 29 -->
+    <ScalarVariable
+      name="RL.P_nominal"
+      valueReference="16777219"
+      description="Nominal power (negative if consumed, positive if generated). Used if mode &lt;&gt; Buildings.Electrical.Types.Load.VariableZ_P_input"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Power"
+        start="-2000"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 30 -->
+    <ScalarVariable
+      name="RL.V_nominal"
+      valueReference="100663313"
+      description="Nominal voltage (V_nominal &gt;= 0)"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"
+        min="0.0"
+        start="120"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 31 -->
+    <ScalarVariable
+      name="RL.initMode"
+      valueReference="100663314"
+      description="Initialization mode for homotopy operator"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.Electrical.Types.InitMode"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 32 -->
+    <ScalarVariable
+      name="RL.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 33 -->
+    <ScalarVariable
+      name="RL.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 34 -->
+    <ScalarVariable
+      name="RL.i[1]"
+      valueReference="369098771"
+      description="Current vector">
+      <Real
+        declaredType="Modelica.SIunits.Current"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 35 -->
+    <ScalarVariable
+      name="RL.i[2]"
+      valueReference="369098772"
+      description="Current vector">
+      <Real
+        declaredType="Modelica.SIunits.Current"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 36 -->
+    <ScalarVariable
+      name="RL.S[1]"
+      valueReference="905969685"
+      description="Phase powers">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 37 -->
+    <ScalarVariable
+      name="RL.S[2]"
+      valueReference="905969686"
+      description="Phase powers">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 38 -->
+    <ScalarVariable
+      name="RL.P"
+      valueReference="436207616"
+      description="Power of the load (negative if consumed, positive if fed into the electrical grid)">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 39 -->
+    <ScalarVariable
+      name="RL.Pow"
+      valueReference="436207616"
+      description="Power consumed">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 40 -->
+    <ScalarVariable
+      name="RL.terminal.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 41 -->
+    <ScalarVariable
+      name="RL.terminal.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 42 -->
+    <ScalarVariable
+      name="RL.terminal.i[1]"
+      valueReference="369098771"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 43 -->
+    <ScalarVariable
+      name="RL.terminal.i[2]"
+      valueReference="369098772"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 44 -->
+    <ScalarVariable
+      name="RL.terminal.theta[1]"
+      valueReference="905969697"
+      description="Optional vector of phase angles">
+      <Real
+        declaredType="Buildings.Electrical.PhaseSystems.PartialPhaseSystem.ReferenceAngle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 45 -->
+    <ScalarVariable
+      name="RL.y_internal"
+      valueReference="100663319"
+      description="Hidden value of the input load for the conditional connector"
+      variability="constant">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 46 -->
+    <ScalarVariable
+      name="RL.P_internal"
+      valueReference="436207616"
+      description="Hidden value of the input power for the conditional connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 47 -->
+    <ScalarVariable
+      name="RL.load"
+      valueReference="100663320"
+      description="Internal representation of control signal, used to avoid singularity"
+      variability="constant">
+      <Real
+        unit="1"
+        min="1E-10"
+        max="1.0"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 48 -->
+    <ScalarVariable
+      name="RL.eps"
+      valueReference="100663321"
+      description="Small number used to avoid a singularity if the power is zero"
+      variability="constant">
+      <Real
+        unit="1"
+        start="1E-10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 49 -->
+    <ScalarVariable
+      name="RL.oneEps"
+      valueReference="100663322"
+      description="Small number used to avoid a singularity if the power is zero"
+      variability="constant">
+      <Real
+        unit="1"
+        start="0.9999999999"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 50 -->
+    <ScalarVariable
+      name="RL.use_pf_in"
+      valueReference="100663323"
+      description="If true, the power factor is defined by an input"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 51 -->
+    <ScalarVariable
+      name="RL.pf"
+      valueReference="16777220"
+      description="Power factor"
+      causality="parameter"
+      variability="tunable">
+      <Real min="0.0"
+        max="1.0"
+        start="0.8"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 52 -->
+    <ScalarVariable
+      name="RL.pf_internal"
+      valueReference="234881028"
+      description="Hidden value of the input load for the conditional connector"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 53 -->
+    <ScalarVariable
+      name="RL.psi[1]"
+      valueReference="100663324"
+      description="Magnetic flux"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.MagneticFlux"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 54 -->
+    <ScalarVariable
+      name="RL.psi[2]"
+      valueReference="100663325"
+      description="Magnetic flux"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.MagneticFlux"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 55 -->
+    <ScalarVariable
+      name="RL.Z[1]"
+      valueReference="100663326"
+      description="Impedance of the load"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Impedance"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 56 -->
+    <ScalarVariable
+      name="RL.Z[2]"
+      valueReference="100663327"
+      description="Impedance of the load"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Impedance"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 57 -->
+    <ScalarVariable
+      name="RL.omega"
+      valueReference="100663330"
+      description="Angular frequency"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 58 -->
+    <ScalarVariable
+      name="RL.Q"
+      valueReference="369098784"
+      description="Reactive power (positive because inductive load)">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 59 -->
+    <ScalarVariable
+      name="RL.theRef"
+      valueReference="905969697"
+      description="Absolute angle of rotating reference system">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 60 -->
+    <ScalarVariable
+      name="der(RL.theRef)"
+      valueReference="100663330"
+      description="der(Absolute angle of rotating reference system)"
+      variability="fixed">
+      <Real
+        unit="rad/s"
+        derivative="59"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 61 -->
+    <ScalarVariable
+      name="powerRequired"
+      valueReference="352321536"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 62 -->
+    <ScalarVariable
+      name="pvOriented.pf"
+      valueReference="16777221"
+      description="Power factor"
+      causality="parameter"
+      variability="tunable">
+      <Real min="0.0"
+        max="1.0"
+        start="0.9"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 63 -->
+    <ScalarVariable
+      name="pvOriented.eta_DCAC"
+      valueReference="16777222"
+      description="Efficiency of DC/AC conversion"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"
+        start="0.76"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 64 -->
+    <ScalarVariable
+      name="pvOriented.A"
+      valueReference="16777223"
+      description="Net surface area"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Area"
+        start="5.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 65 -->
+    <ScalarVariable
+      name="pvOriented.fAct"
+      valueReference="16777224"
+      description="Fraction of surface area with active solar cells"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"
+        start="0.9"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 66 -->
+    <ScalarVariable
+      name="pvOriented.eta"
+      valueReference="16777225"
+      description="Module conversion efficiency"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"
+        start="0.202"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 67 -->
+    <ScalarVariable
+      name="pvOriented.P"
+      valueReference="369098787"
+      description="Generated power">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 68 -->
+    <ScalarVariable
+      name="pvOriented.til"
+      valueReference="100663332"
+      description="Surface tilt"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 69 -->
+    <ScalarVariable
+      name="pvOriented.azi"
+      valueReference="100663333"
+      description="Surface azimuth"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 70 -->
+    <ScalarVariable
+      name="pvOriented.V_nominal"
+      valueReference="100663334"
+      description="Nominal voltage (V_nominal &gt;= 0)"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"
+        min="0.0"
+        start="230"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 71 -->
+    <ScalarVariable
+      name="pvOriented.terminal.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 72 -->
+    <ScalarVariable
+      name="pvOriented.terminal.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 73 -->
+    <ScalarVariable
+      name="pvOriented.terminal.i[1]"
+      valueReference="369098791"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 74 -->
+    <ScalarVariable
+      name="pvOriented.terminal.i[2]"
+      valueReference="369098792"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 75 -->
+    <ScalarVariable
+      name="pvOriented.terminal.theta[1]"
+      valueReference="905969697"
+      description="Optional vector of phase angles">
+      <Real
+        declaredType="Buildings.Electrical.PhaseSystems.PartialPhaseSystem.ReferenceAngle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 76 -->
+    <ScalarVariable
+      name="pvOriented.panel.pf"
+      valueReference="100663337"
+      description="Power factor"
+      variability="tunable">
+      <Real min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 77 -->
+    <ScalarVariable
+      name="pvOriented.panel.eta_DCAC"
+      valueReference="100663338"
+      description="Efficiency of DC/AC conversion"
+      variability="tunable">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 78 -->
+    <ScalarVariable
+      name="pvOriented.panel.A"
+      valueReference="100663339"
+      description="Net surface area"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Area"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 79 -->
+    <ScalarVariable
+      name="pvOriented.panel.fAct"
+      valueReference="100663340"
+      description="Fraction of surface area with active solar cells"
+      variability="tunable">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 80 -->
+    <ScalarVariable
+      name="pvOriented.panel.eta"
+      valueReference="100663341"
+      description="Module conversion efficiency"
+      variability="tunable">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 81 -->
+    <ScalarVariable
+      name="pvOriented.panel.P"
+      valueReference="369098787"
+      description="Generated power">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 82 -->
+    <ScalarVariable
+      name="pvOriented.panel.V_nominal"
+      valueReference="100663342"
+      description="Nominal voltage (V_nominal &gt;= 0)"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"
+        min="0.0"
+        start="230.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 83 -->
+    <ScalarVariable
+      name="pvOriented.panel.G"
+      valueReference="369098799"
+      description="Total solar irradiation per unit area">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 84 -->
+    <ScalarVariable
+      name="pvOriented.panel.terminal.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 85 -->
+    <ScalarVariable
+      name="pvOriented.panel.terminal.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 86 -->
+    <ScalarVariable
+      name="pvOriented.panel.terminal.i[1]"
+      valueReference="369098791"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 87 -->
+    <ScalarVariable
+      name="pvOriented.panel.terminal.i[2]"
+      valueReference="369098792"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 88 -->
+    <ScalarVariable
+      name="pvOriented.panel.terminal.theta[1]"
+      valueReference="905969697"
+      description="Optional vector of phase angles">
+      <Real
+        declaredType="Buildings.Electrical.PhaseSystems.PartialPhaseSystem.ReferenceAngle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 89 -->
+    <ScalarVariable
+      name="pvOriented.panel.solarPower.y"
+      valueReference="369098800"
+      description="Value of Real output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 90 -->
+    <ScalarVariable
+      name="pvOriented.panel.linearized"
+      valueReference="100663345"
+      description="If =true, introduce a linearization in the load"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 91 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.linearized"
+      valueReference="100663346"
+      description="If true, the load model is linearized"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 92 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.mode"
+      valueReference="100663347"
+      description="Type of load model (e.g., steady state, dynamic, prescribed power consumption, etc.)"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.Electrical.Types.Load"
+        start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 93 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.P_nominal"
+      valueReference="100663348"
+      description="Nominal power (negative if consumed, positive if generated). Used if mode &lt;&gt; Buildings.Electrical.Types.Load.VariableZ_P_input"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Power"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 94 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.V_nominal"
+      valueReference="100663349"
+      description="Nominal voltage (V_nominal &gt;= 0)"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"
+        min="0.0"
+        start="230.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 95 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.initMode"
+      valueReference="100663350"
+      description="Initialization mode for homotopy operator"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.Electrical.Types.InitMode"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 96 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 97 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 98 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.i[1]"
+      valueReference="369098791"
+      description="Current vector">
+      <Real
+        declaredType="Modelica.SIunits.Current"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 99 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.i[2]"
+      valueReference="369098792"
+      description="Current vector">
+      <Real
+        declaredType="Modelica.SIunits.Current"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 100 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.S[1]"
+      valueReference="905969719"
+      description="Phase powers">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 101 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.S[2]"
+      valueReference="905969720"
+      description="Phase powers">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 102 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.P"
+      valueReference="369098787"
+      description="Power of the load (negative if consumed, positive if fed into the electrical grid)">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 103 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.Pow"
+      valueReference="369098787"
+      description="Power consumed">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 104 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.terminal.v[1]"
+      valueReference="100663296"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 105 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.terminal.v[2]"
+      valueReference="100663297"
+      description="Voltage vector"
+      variability="tunable">
+      <Real
+        quantity="Voltage.OnePhase"
+        unit="V"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 106 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.terminal.i[1]"
+      valueReference="369098791"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 107 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.terminal.i[2]"
+      valueReference="369098792"
+      description="Current vector">
+      <Real
+        quantity="Current.OnePhase"
+        unit="A"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 108 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.terminal.theta[1]"
+      valueReference="905969697"
+      description="Optional vector of phase angles">
+      <Real
+        declaredType="Buildings.Electrical.PhaseSystems.PartialPhaseSystem.ReferenceAngle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 109 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.y_internal"
+      valueReference="100663353"
+      description="Hidden value of the input load for the conditional connector"
+      variability="constant">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 110 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.P_internal"
+      valueReference="369098787"
+      description="Hidden value of the input power for the conditional connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 111 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.load"
+      valueReference="100663354"
+      description="Internal representation of control signal, used to avoid singularity"
+      variability="constant">
+      <Real
+        unit="1"
+        min="1E-10"
+        max="1.0"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 112 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.eps"
+      valueReference="100663355"
+      description="Small number used to avoid a singularity if the power is zero"
+      variability="constant">
+      <Real
+        unit="1"
+        start="1E-10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 113 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.oneEps"
+      valueReference="100663356"
+      description="Small number used to avoid a singularity if the power is zero"
+      variability="constant">
+      <Real
+        unit="1"
+        start="0.9999999999"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 114 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.use_pf_in"
+      valueReference="100663357"
+      description="If true, the power factor is defined by an input"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 115 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.pf"
+      valueReference="100663358"
+      description="Power factor"
+      variability="tunable">
+      <Real min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 116 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.pf_internal"
+      valueReference="100663358"
+      description="Hidden value of the input load for the conditional connector"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 117 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.q[1]"
+      valueReference="100663359"
+      description="Electric charge"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.ElectricCharge"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 118 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.q[2]"
+      valueReference="100663360"
+      description="Electric charge"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.ElectricCharge"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 119 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.Y[1]"
+      valueReference="100663361"
+      description="Admittance"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Admittance"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 120 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.Y[2]"
+      valueReference="100663362"
+      description="Admittance"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Admittance"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 121 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.omega"
+      valueReference="100663330"
+      description="Angular velocity"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.AngularVelocity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 122 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.Q"
+      valueReference="369098819"
+      description="Reactive power (negative because capacitive load)">
+      <Real
+        declaredType="Modelica.SIunits.Power"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 123 -->
+    <ScalarVariable
+      name="pvOriented.panel.load.theRef"
+      valueReference="905969697"
+      description="Absolute angle of rotating reference system">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 124 -->
+    <ScalarVariable
+      name="der(pvOriented.panel.load.theRef)"
+      valueReference="100663330"
+      description="der(Absolute angle of rotating reference system)"
+      variability="fixed">
+      <Real
+        unit="rad/s"
+        derivative="123"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 125 -->
+    <ScalarVariable
+      name="pvOriented.panel.gain_DCAC.k"
+      valueReference="100663364"
+      description="Gain value multiplied with input signal"
+      variability="tunable">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 126 -->
+    <ScalarVariable
+      name="pvOriented.panel.gain_DCAC.u"
+      valueReference="369098800"
+      description="Input signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 127 -->
+    <ScalarVariable
+      name="pvOriented.panel.gain_DCAC.y"
+      valueReference="369098787"
+      description="Output signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 128 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.HDifHor"
+      valueReference="436207617"
+      description="Horizontal diffuse solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 129 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.HDirNor"
+      valueReference="436207618"
+      description="Direct normal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 130 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.HGloHor"
+      valueReference="436207619"
+      description="Global horizontal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 131 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.alt"
+      valueReference="436207620"
+      description="location altitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 132 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.cloTim"
+      valueReference="436207621"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 133 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.lat"
+      valueReference="436207622"
+      description="Latitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 134 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 135 -->
+    <ScalarVariable
+      name="pvOriented.weaBus.solZen"
+      valueReference="436207624"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 136 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.til"
+      valueReference="100663365"
+      description="Surface tilt"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 137 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.H"
+      valueReference="369098822"
+      description="Radiation per unit area">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 138 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.solZen"
+      valueReference="436207624"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 139 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.HDirNor"
+      valueReference="436207618"
+      description="Horizontal global solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 140 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.HDifHor"
+      valueReference="436207617"
+      description="Horizontal diffuse solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 141 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.HGloHor"
+      valueReference="436207619"
+      description="Global horizontal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 142 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 143 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.alt"
+      valueReference="436207620"
+      description="location altitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 144 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.cloTim"
+      valueReference="436207621"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 145 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.weaBus.lat"
+      valueReference="436207622"
+      description="Latitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 146 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.rho"
+      valueReference="16777226"
+      description="Ground reflectance"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"
+        start="0.2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 147 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.azi"
+      valueReference="100663367"
+      description="Surface azimuth"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 148 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.outSkyCon"
+      valueReference="100663368"
+      description="Output contribution of diffuse irradiation from sky"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 149 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.outGroCon"
+      valueReference="100663369"
+      description="Output contribution of diffuse irradiation from ground"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 150 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.rho"
+      valueReference="100663370"
+      description="Ground reflectance"
+      variability="tunable">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 151 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.til"
+      valueReference="100663371"
+      description="Surface tilt angle"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 152 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.briCof1"
+      valueReference="369098828"
+      description="Brightening Coeffcient F1">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 153 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.briCof2"
+      valueReference="369098829"
+      description="Brightening Coeffcient F2">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 154 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.HDifHor"
+      valueReference="436207617"
+      description="Diffuse horizontal solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 155 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.HGloHor"
+      valueReference="436207619"
+      description="Global horizontal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 156 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.zen"
+      valueReference="905969742"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 157 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.incAng"
+      valueReference="369098831"
+      description="Solar incidence angle on the surface">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 158 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.HGroDifTil"
+      valueReference="369098832"
+      description="Hemispherical diffuse solar irradiation on a tilted surface from the ground">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 159 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.HSkyDifTil"
+      valueReference="369098833"
+      description="Hemispherical diffuse solar irradiation on a tilted surface from the sky">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 160 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.a"
+      valueReference="369098834">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 161 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.b"
+      valueReference="369098835">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 162 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.HDifTil.bMin"
+      valueReference="100663380"
+      description="Lower bound for b"
+      variability="constant">
+      <Real start="0.08715574274765814"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 163 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.zen"
+      valueReference="436207624"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 164 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.HDifHor"
+      valueReference="436207617"
+      description="Horizontal diffuse solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 165 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.HDirNor"
+      valueReference="436207618"
+      description="Horizontal global solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 166 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.skyCle"
+      valueReference="369098837"
+      description="Sky clearness. skyCle=1: overast sky; skyCle=8: clear sky">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 167 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.hSmall"
+      valueReference="100663382"
+      description="Small radiation for regularization"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Irradiance"
+        start="5E-05"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 168 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.deltaX"
+      valueReference="100663383"
+      description="Small radiation for regularization"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Irradiance"
+        start="2.5E-05"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 169 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.k"
+      valueReference="100663384"
+      description="Constant factor"
+      variability="constant">
+      <Real
+        unit="rad-3"
+        start="1.040895310738997"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 170 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.tmp1"
+      valueReference="369098841"
+      description="Intermediate variable">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 171 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyCle.HDifHorBou"
+      valueReference="369098842"
+      description="Diffuse horizontal irradiation, bounded away from zero">
+      <Real
+        declaredType="Modelica.SIunits.Irradiance"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 172 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.zen"
+      valueReference="905969742"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 173 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.skyCle"
+      valueReference="369098837"
+      description="Sky clearness. skyCle=1: overcast sky; skyCle=8 clear sky">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 174 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.skyBri"
+      valueReference="369098843"
+      description="Sky brightness [0,1]">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 175 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F1"
+      valueReference="369098828"
+      description="Circumsolar brightening coefficient">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 176 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F2"
+      valueReference="369098829"
+      description="Horizon brightening coefficient">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 177 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F11"
+      valueReference="369098844">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 178 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F12"
+      valueReference="369098845">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 179 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F13"
+      valueReference="369098846">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 180 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F21"
+      valueReference="369098847">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 181 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F22"
+      valueReference="369098848">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 182 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.F23"
+      valueReference="369098849">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 183 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.d"
+      valueReference="100663394"
+      variability="constant">
+      <Real start="0.01"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 184 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a1"
+      valueReference="369098851">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 185 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a2"
+      valueReference="369098852">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 186 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a3"
+      valueReference="369098853">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 187 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a4"
+      valueReference="369098854">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 188 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a5"
+      valueReference="369098855">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 189 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a6"
+      valueReference="369098856">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 190 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a7"
+      valueReference="369098857">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 191 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.a8"
+      valueReference="369098858">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 192 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b1"
+      valueReference="369098851">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 193 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b2"
+      valueReference="369098859">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 194 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b3"
+      valueReference="369098860">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 195 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b4"
+      valueReference="369098861">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 196 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b5"
+      valueReference="369098862">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 197 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b6"
+      valueReference="369098863">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 198 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b7"
+      valueReference="369098864">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 199 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.briCoe.b8"
+      valueReference="369098858">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 200 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.relAirMas.alt"
+      valueReference="436207620"
+      description="location altitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Length"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 201 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.relAirMas.zen"
+      valueReference="905969742"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 202 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.relAirMas.relAirMas"
+      valueReference="369098865"
+      description="Relative air mass">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 203 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.relAirMas.zenLim"
+      valueReference="369098866"
+      description="Zenith angle bounded from above by 90 degree">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 204 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.relAirMas.zenDeg"
+      valueReference="369098867"
+      description="Zenith angle in degree">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 205 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyBri.relAirMas"
+      valueReference="369098865"
+      description="Relative air mass">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 206 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyBri.HDifHor"
+      valueReference="436207617"
+      description="Horizontal diffuse solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 207 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyBri.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 208 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyBri.skyBri"
+      valueReference="369098843"
+      description="Sky brightness">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 209 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.skyBri.extRadCor"
+      valueReference="369098868"
+      description="Correction for extraterrestrial radiation">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 210 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.azi"
+      valueReference="100663413"
+      description="Surface azimuth"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 211 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.til"
+      valueReference="100663414"
+      description="Surface tilt"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 212 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.y"
+      valueReference="369098831"
+      description="Incidence angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 213 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.cloTim"
+      valueReference="436207621"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 214 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 215 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.lat"
+      valueReference="436207622"
+      description="Latitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 216 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.HDifHor"
+      valueReference="436207617"
+      description="Horizontal diffuse solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 217 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.HDirNor"
+      valueReference="436207618"
+      description="Direct normal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 218 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.HGloHor"
+      valueReference="436207619"
+      description="Global horizontal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 219 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.alt"
+      valueReference="436207620"
+      description="location altitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 220 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.weaBus.solZen"
+      valueReference="436207624"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 221 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.decAng.nDay"
+      valueReference="436207621"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 222 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.decAng.decAng"
+      valueReference="369098871"
+      description="Solar declination angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 223 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.decAng.k1"
+      valueReference="100663416"
+      description="Constant"
+      variability="constant">
+      <Real start="0.3979486313076103"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 224 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.decAng.k2"
+      valueReference="100663417"
+      description="Constant"
+      variability="constant">
+      <Real start="0.017202423838958484"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 225 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.solHouAng.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 226 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.solHouAng.solHouAng"
+      valueReference="369098874"
+      description="Solar hour angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 227 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.azi"
+      valueReference="100663419"
+      description="Surface azimuth. azi=-90 degree if surface outward unit normal points toward east; azi=0 if it points toward south"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 228 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.til"
+      valueReference="100663420"
+      description="Surface tilt. til=90 degree for walls; til=0 for ceilings; til=180 for roof"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 229 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.solHouAng"
+      valueReference="369098877"
+      description="Solar hour angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 230 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.decAng"
+      valueReference="369098878"
+      description="Declination">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 231 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.incAng"
+      valueReference="369098831"
+      description="Incidence angle on a tilted surface">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 232 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.lat"
+      valueReference="436207622"
+      description="Latitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 233 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.dec_c"
+      valueReference="369098879"
+      description="Cosine of declination angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 234 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.dec_s"
+      valueReference="369098880"
+      description="Sine of declination angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 235 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.sol_c"
+      valueReference="369098881"
+      description="Cosine of solar hour angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 236 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.sol_s"
+      valueReference="905969794"
+      description="Sine of solar hour angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 237 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.lat_c"
+      valueReference="369098883"
+      description="Cosine of latitude">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 238 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.incAng.incAng.lat_s"
+      valueReference="369098884"
+      description="Sine of latitude">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 239 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.add.u1"
+      valueReference="369098833"
+      description="Connector of Real input signal 1">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 240 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.add.u2"
+      valueReference="369098832"
+      description="Connector of Real input signal 2">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 241 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.add.y"
+      valueReference="369098822"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 242 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.add.k1"
+      valueReference="16777227"
+      description="Gain of input signal 1"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 243 -->
+    <ScalarVariable
+      name="pvOriented.HDifTil.add.k2"
+      valueReference="16777228"
+      description="Gain of input signal 2"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 244 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.til"
+      valueReference="100663429"
+      description="Surface tilt"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 245 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.H"
+      valueReference="369098886"
+      description="Radiation per unit area">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 246 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.HDirNor"
+      valueReference="436207618"
+      description="Direct normal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 247 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.HDifHor"
+      valueReference="436207617"
+      description="Horizontal diffuse solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 248 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.HGloHor"
+      valueReference="436207619"
+      description="Global horizontal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 249 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.alt"
+      valueReference="436207620"
+      description="location altitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 250 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.cloTim"
+      valueReference="436207621"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 251 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.lat"
+      valueReference="436207622"
+      description="Latitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 252 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 253 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.weaBus.solZen"
+      valueReference="436207624"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 254 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.azi"
+      valueReference="100663431"
+      description="Surface azimuth"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 255 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.inc"
+      valueReference="369098888"
+      description="Incidence angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 256 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.azi"
+      valueReference="100663433"
+      description="Surface azimuth"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 257 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.til"
+      valueReference="100663434"
+      description="Surface tilt"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 258 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.y"
+      valueReference="369098888"
+      description="Incidence angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 259 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.cloTim"
+      valueReference="436207621"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 260 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 261 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.lat"
+      valueReference="436207622"
+      description="Latitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 262 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.HDifHor"
+      valueReference="436207617"
+      description="Horizontal diffuse solar radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 263 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.HDirNor"
+      valueReference="436207618"
+      description="Direct normal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 264 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.HGloHor"
+      valueReference="436207619"
+      description="Global horizontal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 265 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.alt"
+      valueReference="436207620"
+      description="location altitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 266 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.weaBus.solZen"
+      valueReference="436207624"
+      description="Zenith angle of the sun beam">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 267 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.decAng.nDay"
+      valueReference="436207621"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 268 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.decAng.decAng"
+      valueReference="369098891"
+      description="Solar declination angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 269 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.decAng.k1"
+      valueReference="100663436"
+      description="Constant"
+      variability="constant">
+      <Real start="0.3979486313076103"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 270 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.decAng.k2"
+      valueReference="100663437"
+      description="Constant"
+      variability="constant">
+      <Real start="0.017202423838958484"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 271 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.solHouAng.solTim"
+      valueReference="436207623"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 272 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.solHouAng.solHouAng"
+      valueReference="369098894"
+      description="Solar hour angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 273 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.azi"
+      valueReference="100663439"
+      description="Surface azimuth. azi=-90 degree if surface outward unit normal points toward east; azi=0 if it points toward south"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 274 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.til"
+      valueReference="100663440"
+      description="Surface tilt. til=90 degree for walls; til=0 for ceilings; til=180 for roof"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="0.78539816339745"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 275 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.solHouAng"
+      valueReference="369098897"
+      description="Solar hour angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 276 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.decAng"
+      valueReference="369098898"
+      description="Declination">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 277 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.incAng"
+      valueReference="369098888"
+      description="Incidence angle on a tilted surface">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 278 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.lat"
+      valueReference="436207622"
+      description="Latitude">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 279 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.dec_c"
+      valueReference="369098899"
+      description="Cosine of declination angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 280 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.dec_s"
+      valueReference="369098900"
+      description="Sine of declination angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 281 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.sol_c"
+      valueReference="369098901"
+      description="Cosine of solar hour angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 282 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.sol_s"
+      valueReference="905969814"
+      description="Sine of solar hour angle">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 283 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.lat_c"
+      valueReference="369098903"
+      description="Cosine of latitude">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 284 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.incAng.incAng.lat_s"
+      valueReference="369098904"
+      description="Sine of latitude">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 285 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.HDirTil.incAng"
+      valueReference="369098888"
+      description="Incidence angle of the sun beam on a tilted surface">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 286 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.HDirTil.HDirNor"
+      valueReference="436207618"
+      description="Direct normal radiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 287 -->
+    <ScalarVariable
+      name="pvOriented.HDirTil.HDirTil.HDirTil"
+      valueReference="369098886"
+      description="Direct solar irradiation on a tilted surface">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 288 -->
+    <ScalarVariable
+      name="pvOriented.G.u1"
+      valueReference="369098822"
+      description="Connector of Real input signal 1">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 289 -->
+    <ScalarVariable
+      name="pvOriented.G.u2"
+      valueReference="369098886"
+      description="Connector of Real input signal 2">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 290 -->
+    <ScalarVariable
+      name="pvOriented.G.y"
+      valueReference="369098799"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 291 -->
+    <ScalarVariable
+      name="pvOriented.G.k1"
+      valueReference="16777229"
+      description="Gain of input signal 1"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 292 -->
+    <ScalarVariable
+      name="pvOriented.G.k2"
+      valueReference="16777230"
+      description="Gain of input signal 2"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 293 -->
+    <ScalarVariable
+      name="pvOriented.linearized"
+      valueReference="100663449"
+      description="If =true, linearize the load"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 294 -->
+    <ScalarVariable
+      name="realExpression.y"
+      valueReference="335544320"
+      description="Value of Real output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 295 -->
+    <ScalarVariable
+      name="powerOutputReal"
+      valueReference="335544320"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 296 -->
+    <ScalarVariable
+      name="weaBus.HDifHor"
+      valueReference="352321537"
+      description="Horizontal diffuse solar radiation"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 297 -->
+    <ScalarVariable
+      name="weaBus.HDirNor"
+      valueReference="352321538"
+      description="Direct normal radiation"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 298 -->
+    <ScalarVariable
+      name="weaBus.HGloHor"
+      valueReference="352321539"
+      description="Global horizontal radiation"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 299 -->
+    <ScalarVariable
+      name="weaBus.alt"
+      valueReference="352321540"
+      description="location altitude"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 300 -->
+    <ScalarVariable
+      name="weaBus.cloTim"
+      valueReference="352321541"
+      description="Day number with units of seconds"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 301 -->
+    <ScalarVariable
+      name="weaBus.lat"
+      valueReference="352321542"
+      description="Latitude"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"
+        displayUnit="deg"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 302 -->
+    <ScalarVariable
+      name="weaBus.solTim"
+      valueReference="352321543"
+      description="Solar time"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 303 -->
+    <ScalarVariable
+      name="weaBus.solZen"
+      valueReference="352321544"
+      description="Zenith angle of the sun beam"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"
+        start="0.0"/>
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="295"
+        dependencies="61 296 297 298 299 300 301 302 303"
+        dependenciesKind="fixed dependent dependent fixed dependent dependent dependent dependent dependent"/>
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="295"
+        dependencies="7 8 51 61 62 63 64 65 66 146 242 243 291 292 296 297 298 299 300 301 302 303"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

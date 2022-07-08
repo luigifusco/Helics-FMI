@@ -9,13 +9,13 @@
       },
       {
         "directory": ".",
-        "exec": "python -u ../helics_fmi.py ApartmentNoPV --time",
+        "exec": "valgrind --tool=callgrind python -u ../lib/helics_fmi.py ApartmentNoPV",
         "host": "localhost",
         "name": "ApartmentNoPV"
       },
       {
         "directory": ".",
-        "exec": "python -u ../helics_fmi.py PolimiPV --time",
+        "exec": "python -u ../lib/helics_fmi.py PolimiPV",
         "host": "localhost",
         "name": "PolimiPV"
       }

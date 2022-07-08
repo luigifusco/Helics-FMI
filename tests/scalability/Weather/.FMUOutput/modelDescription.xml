@@ -1,0 +1,3248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="2.0"
+  modelName="Weather"
+  guid="{06cfe3e7-7978-4d43-a785-8fb5b251c1dd}"
+  description="Reader for TMY3 weather data"
+  version="1"
+  generationTool="Dymola Version 2021 (64-bit), 2020-04-17 (requires license to execute)"
+  generationDateAndTime="2022-06-11T14:21:29Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="8">
+  <CoSimulation
+    modelIdentifier="Weather"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="true"
+    maxOutputDerivativeOrder="1"
+    canGetAndSetFMUstate="true"
+    canSerializeFMUstate="true"
+    providesDirectionalDerivative="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="1"/>
+    <Unit
+      name="K">
+      <BaseUnit K="1"/>
+      <DisplayUnit
+        name="degC"
+        offset="-273.15"/>
+    </Unit>
+    <Unit
+      name="Pa">
+      <BaseUnit kg="1"
+        m="-1"
+        s="-2"/>
+      <DisplayUnit
+        name="bar"
+        factor="1E-05"/>
+    </Unit>
+    <Unit
+      name="W/m2">
+      <BaseUnit kg="1"
+        s="-3"/>
+    </Unit>
+    <Unit
+      name="deg">
+      <BaseUnit rad="1"
+        factor="0.017453292519943295"/>
+    </Unit>
+    <Unit
+      name="degC">
+      <BaseUnit K="1"
+        offset="273.15"/>
+    </Unit>
+    <Unit
+      name="m">
+      <BaseUnit m="1"/>
+      <DisplayUnit
+        name="m"/>
+    </Unit>
+    <Unit
+      name="m/s">
+      <BaseUnit m="1"
+        s="-1"/>
+    </Unit>
+    <Unit
+      name="rad">
+      <BaseUnit rad="1"/>
+      <DisplayUnit
+        name="deg"
+        factor="57.29577951308232"/>
+    </Unit>
+    <Unit
+      name="s">
+      <BaseUnit s="1"/>
+      <DisplayUnit
+        name="d"
+        factor="1.1574074074074073E-05"/>
+      <DisplayUnit
+        name="h"
+        factor="0.0002777777777777778"/>
+      <DisplayUnit
+        name="min"
+        factor="0.016666666666666666"/>
+      <DisplayUnit
+        name="s"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealInput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealOutput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Angle">
+      <Real
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Conversions.NonSIunits.Temperature_degC">
+      <Real
+        quantity="ThermodynamicTemperature"
+        unit="degC"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Emissivity">
+      <Real
+        quantity="Emissivity"
+        unit="1"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.HeatFlux">
+      <Real
+        quantity="HeatFlux"
+        unit="W/m2"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Length">
+      <Real
+        quantity="Length"
+        unit="m"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.MassFraction">
+      <Real
+        quantity="MassFraction"
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Pressure">
+      <Real
+        quantity="Pressure"
+        unit="Pa"
+        displayUnit="bar"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Temperature">
+      <Real
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"
+        min="0.0"
+        nominal="300.0"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Time">
+      <Real
+        quantity="Time"
+        unit="s"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Velocity">
+      <Real
+        quantity="Velocity"
+        unit="m/s"/>
+    </SimpleType>
+    <SimpleType
+      name="Buildings.BoundaryConditions.Types.DataSource">
+      <Enumeration>
+        <Item name="File"
+          value="1"
+          description="Use data from file"/>
+        <Item name="Parameter"
+          value="2"
+          description="Use parameter"/>
+        <Item name="Input"
+          value="3"
+          description="Use input connector"/>
+      </Enumeration>
+    </SimpleType>
+    <SimpleType
+      name="Buildings.BoundaryConditions.Types.RadiationDataSource">
+      <Enumeration>
+        <Item name="File"
+          value="1"
+          description="Use data from file"/>
+        <Item name="Input_HGloHor_HDifHor"
+          value="2"
+          description="Global horizontal and diffuse horizontal radiation from connector"/>
+        <Item name="Input_HDirNor_HDifHor"
+          value="3"
+          description="Direct normal and diffuse horizontal radiation from connector"/>
+        <Item name="Input_HDirNor_HGloHor"
+          value="4"
+          description="Direct normal and global horizontal radiation from connector"/>
+      </Enumeration>
+    </SimpleType>
+    <SimpleType
+      name="Buildings.BoundaryConditions.Types.SkyTemperatureCalculation">
+      <Enumeration>
+        <Item name="HorizontalRadiation"
+          value="1"
+          description="Use horizontal irradiation"/>
+        <Item name="TemperaturesAndSkyCover"
+          value="2"
+          description="Use dry-bulb and dew-point temperatures and sky cover"/>
+      </Enumeration>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Types.Extrapolation">
+      <Enumeration>
+        <Item name="HoldLastPoint"
+          value="1"
+          description="Hold the first/last table point outside of the table scope"/>
+        <Item name="LastTwoPoints"
+          value="2"
+          description="Extrapolate by using the derivative at the first/last table points outside of the table scope"/>
+        <Item name="Periodic"
+          value="3"
+          description="Repeat the table scope periodically"/>
+        <Item name="NoExtrapolation"
+          value="4"
+          description="Extrapolation triggers an error"/>
+      </Enumeration>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Types.Smoothness">
+      <Enumeration>
+        <Item name="LinearSegments"
+          value="1"
+          description="Table points are linearly interpolated"/>
+        <Item name="ContinuousDerivative"
+          value="2"
+          description="Table points are interpolated (by Akima splines) such that the first derivative is continuous"/>
+        <Item name="ConstantSegments"
+          value="3"
+          description="Table points are not interpolated, but the value from the previous abscissa point is returned"/>
+        <Item name="MonotoneContinuousDerivative1"
+          value="4"
+          description="Table points are interpolated (by Fritsch-Butland splines) such that the monotonicity is preserved and the first derivative is continuous"/>
+        <Item name="MonotoneContinuousDerivative2"
+          value="5"
+          description="Table points are interpolated (by Steffen splines) such that the monotonicity is preserved and the first derivative is continuous"/>
+      </Enumeration>
+    </SimpleType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="1.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <!-- Index for next variable = 1 -->
+    <ScalarVariable
+      name="weaBus.TDryBul"
+      valueReference="335544320"
+      description="Dry bulb temperature"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"
+        displayUnit="degC"
+        min="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 2 -->
+    <ScalarVariable
+      name="weaBus.TDewPoi"
+      valueReference="335544321"
+      description="Dew point temperature"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 3 -->
+    <ScalarVariable
+      name="weaBus.TWetBul"
+      valueReference="335544322"
+      description="Wet bulb temperature"
+      causality="output"
+      initial="approx">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"
+        min="0.0"
+        start="291.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 4 -->
+    <ScalarVariable
+      name="weaBus.relHum"
+      valueReference="335544323"
+      description="Relative humidity"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 5 -->
+    <ScalarVariable
+      name="weaBus.HDirNor"
+      valueReference="335544324"
+      description="Direct normal solar irradiation"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 6 -->
+    <ScalarVariable
+      name="weaBus.HDifHor"
+      valueReference="335544325"
+      description="Diffuse horizontal solar irradiation"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 7 -->
+    <ScalarVariable
+      name="weaBus.HGloHor"
+      valueReference="335544326"
+      description="Global horizontal solar irradiation"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 8 -->
+    <ScalarVariable
+      name="weaBus.TBlaSky"
+      valueReference="335544327"
+      description="Black-body sky temperature"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 9 -->
+    <ScalarVariable
+      name="weaBus.HHorIR"
+      valueReference="335544328"
+      description="Horizontal infrared irradiation"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"
+        min="0.0"
+        nominal="100.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 10 -->
+    <ScalarVariable
+      name="weaBus.winSpe"
+      valueReference="335544329"
+      description="Wind speed"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 11 -->
+    <ScalarVariable
+      name="weaBus.winDir"
+      valueReference="335544330"
+      description="Wind direction"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 12 -->
+    <ScalarVariable
+      name="weaBus.ceiHei"
+      valueReference="335544331"
+      description="Cloud cover ceiling height"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 13 -->
+    <ScalarVariable
+      name="weaBus.nTot"
+      valueReference="335544332"
+      description="Total sky cover"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 14 -->
+    <ScalarVariable
+      name="weaBus.nOpa"
+      valueReference="335544333"
+      description="Opaque sky cover"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 15 -->
+    <ScalarVariable
+      name="weaBus.cloTim"
+      valueReference="335544334"
+      description="Model time"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 16 -->
+    <ScalarVariable
+      name="weaBus.solTim"
+      valueReference="335544335"
+      description="Solar time"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="s"
+        displayUnit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 17 -->
+    <ScalarVariable
+      name="weaBus.solAlt"
+      valueReference="335544336"
+      description="Solar altitude angle"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 18 -->
+    <ScalarVariable
+      name="weaBus.solZen"
+      valueReference="335544337"
+      description="Zenith angle"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 19 -->
+    <ScalarVariable
+      name="weaBus.solDec"
+      valueReference="335544338"
+      description="Solar declination angle"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 20 -->
+    <ScalarVariable
+      name="weaBus.solHouAng"
+      valueReference="335544339"
+      description="Solar hour angle"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 21 -->
+    <ScalarVariable
+      name="weaBus.lon"
+      valueReference="67108884"
+      description="Longitude of the location"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 22 -->
+    <ScalarVariable
+      name="weaBus.lat"
+      valueReference="67108885"
+      description="Latitude of the location"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 23 -->
+    <ScalarVariable
+      name="weaBus.alt"
+      valueReference="67108886"
+      description="Location altitude above sea level"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 24 -->
+    <ScalarVariable
+      name="weaBus.pAtm"
+      valueReference="67108887"
+      description="Atmospheric pressure"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="Pa"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 25 -->
+    <ScalarVariable
+      name="computeWetBulbTemperature"
+      valueReference="100663296"
+      description="If true, then this model computes the wet bulb temperature"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 26 -->
+    <ScalarVariable
+      name="pAtm"
+      valueReference="16777216"
+      description="Atmospheric pressure (used if pAtmSou=Parameter)"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Pressure"
+        start="101325"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 27 -->
+    <ScalarVariable
+      name="TDryBul"
+      valueReference="16777217"
+      description="Dry bulb temperature (used if TDryBul=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="293.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 28 -->
+    <ScalarVariable
+      name="TDewPoi"
+      valueReference="16777218"
+      description="Dew point temperature (used if TDewPoi=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="283.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 29 -->
+    <ScalarVariable
+      name="TBlaSky"
+      valueReference="16777219"
+      description="Black-body sky temperature (used if TBlaSkySou=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="273.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 30 -->
+    <ScalarVariable
+      name="relHum"
+      valueReference="16777220"
+      description="Relative humidity (used if relHum=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"
+        start="0.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 31 -->
+    <ScalarVariable
+      name="winSpe"
+      valueReference="16777221"
+      description="Wind speed (used if winSpe=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Velocity"
+        min="0.0"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 32 -->
+    <ScalarVariable
+      name="winDir"
+      valueReference="16777222"
+      description="Wind direction (used if winDir=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Angle"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 33 -->
+    <ScalarVariable
+      name="HInfHor"
+      valueReference="16777223"
+      description="Infrared horizontal radiation (used if HInfHorSou=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.HeatFlux"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 34 -->
+    <ScalarVariable
+      name="ceiHei"
+      valueReference="16777224"
+      description="Ceiling height (used if ceiHei=Parameter)"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        quantity="Height"
+        unit="m"
+        displayUnit="m"
+        start="20000"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 35 -->
+    <ScalarVariable
+      name="totSkyCov"
+      valueReference="16777225"
+      description="Total sky cover (used if totSkyCov=Parameter). Use 0 &lt;= totSkyCov &lt;= 1"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"
+        start="0.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 36 -->
+    <ScalarVariable
+      name="opaSkyCov"
+      valueReference="16777226"
+      description="Opaque sky cover (used if opaSkyCov=Parameter). Use 0 &lt;= opaSkyCov &lt;= 1"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        unit="1"
+        min="0.0"
+        max="1.0"
+        start="0.5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 37 -->
+    <ScalarVariable
+      name="calTSky"
+      valueReference="100663309"
+      description="Model choice for black-body sky temperature calculation"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.SkyTemperatureCalculation"
+        start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 38 -->
+    <ScalarVariable
+      name="lon"
+      valueReference="100663310"
+      description="Longitude"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 39 -->
+    <ScalarVariable
+      name="lat"
+      valueReference="100663311"
+      description="Latitude"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 40 -->
+    <ScalarVariable
+      name="timZon"
+      valueReference="100663312"
+      description="Time zone"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="h"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 41 -->
+    <ScalarVariable
+      name="alt"
+      valueReference="100663313"
+      description="Location altitude above sea level"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Length"
+        displayUnit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 42 -->
+    <ScalarVariable
+      name="timeSpan[1]"
+      valueReference="100663314"
+      description="Start time, end time of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 43 -->
+    <ScalarVariable
+      name="timeSpan[2]"
+      valueReference="100663315"
+      description="Start time, end time of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 44 -->
+    <ScalarVariable
+      name="datRea.nout"
+      valueReference="100663316"
+      description="Number of outputs"
+      variability="constant">
+      <Integer start="26"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 45 -->
+    <ScalarVariable
+      name="datRea.u"
+      valueReference="369098773"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 46 -->
+    <ScalarVariable
+      name="datRea.y[1]"
+      valueReference="369098774"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 47 -->
+    <ScalarVariable
+      name="datRea.y[2]"
+      valueReference="369098775"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 48 -->
+    <ScalarVariable
+      name="datRea.y[3]"
+      valueReference="369098776"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 49 -->
+    <ScalarVariable
+      name="datRea.y[4]"
+      valueReference="905969689"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 50 -->
+    <ScalarVariable
+      name="datRea.y[5]"
+      valueReference="905969690"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 51 -->
+    <ScalarVariable
+      name="datRea.y[6]"
+      valueReference="905969691"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 52 -->
+    <ScalarVariable
+      name="datRea.y[7]"
+      valueReference="905969692"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 53 -->
+    <ScalarVariable
+      name="datRea.y[8]"
+      valueReference="905969693"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 54 -->
+    <ScalarVariable
+      name="datRea.y[9]"
+      valueReference="905969694"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 55 -->
+    <ScalarVariable
+      name="datRea.y[10]"
+      valueReference="905969695"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 56 -->
+    <ScalarVariable
+      name="datRea.y[11]"
+      valueReference="369098784"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 57 -->
+    <ScalarVariable
+      name="datRea.y[12]"
+      valueReference="369098785"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 58 -->
+    <ScalarVariable
+      name="datRea.y[13]"
+      valueReference="369098786"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 59 -->
+    <ScalarVariable
+      name="datRea.y[14]"
+      valueReference="369098787"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 60 -->
+    <ScalarVariable
+      name="datRea.y[15]"
+      valueReference="905969700"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 61 -->
+    <ScalarVariable
+      name="datRea.y[16]"
+      valueReference="369098789"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 62 -->
+    <ScalarVariable
+      name="datRea.y[17]"
+      valueReference="905969702"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 63 -->
+    <ScalarVariable
+      name="datRea.y[18]"
+      valueReference="905969703"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 64 -->
+    <ScalarVariable
+      name="datRea.y[19]"
+      valueReference="905969704"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 65 -->
+    <ScalarVariable
+      name="datRea.y[20]"
+      valueReference="905969705"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 66 -->
+    <ScalarVariable
+      name="datRea.y[21]"
+      valueReference="905969706"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 67 -->
+    <ScalarVariable
+      name="datRea.y[22]"
+      valueReference="905969707"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 68 -->
+    <ScalarVariable
+      name="datRea.y[23]"
+      valueReference="905969708"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 69 -->
+    <ScalarVariable
+      name="datRea.y[24]"
+      valueReference="905969709"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 70 -->
+    <ScalarVariable
+      name="datRea.y[25]"
+      valueReference="905969710"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 71 -->
+    <ScalarVariable
+      name="datRea.y[26]"
+      valueReference="369098799"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 72 -->
+    <ScalarVariable
+      name="datRea.tableOnFile"
+      valueReference="100663344"
+      description="= true, if table is defined on file or in function usertab"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 73 -->
+    <ScalarVariable
+      name="datRea.verboseRead"
+      valueReference="16777227"
+      description="= true, if info message that file is loading is to be printed"
+      causality="parameter"
+      variability="tunable">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 74 -->
+    <ScalarVariable
+      name="datRea.columns[1]"
+      valueReference="100663345"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 75 -->
+    <ScalarVariable
+      name="datRea.columns[2]"
+      valueReference="100663346"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 76 -->
+    <ScalarVariable
+      name="datRea.columns[3]"
+      valueReference="100663347"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="4"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 77 -->
+    <ScalarVariable
+      name="datRea.columns[4]"
+      valueReference="100663348"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="5"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 78 -->
+    <ScalarVariable
+      name="datRea.columns[5]"
+      valueReference="100663349"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="6"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 79 -->
+    <ScalarVariable
+      name="datRea.columns[6]"
+      valueReference="100663350"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="11"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 80 -->
+    <ScalarVariable
+      name="datRea.columns[7]"
+      valueReference="100663351"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="12"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 81 -->
+    <ScalarVariable
+      name="datRea.columns[8]"
+      valueReference="100663352"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="13"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 82 -->
+    <ScalarVariable
+      name="datRea.columns[9]"
+      valueReference="100663353"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="14"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 83 -->
+    <ScalarVariable
+      name="datRea.columns[10]"
+      valueReference="100663354"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 84 -->
+    <ScalarVariable
+      name="datRea.columns[11]"
+      valueReference="100663355"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="16"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 85 -->
+    <ScalarVariable
+      name="datRea.columns[12]"
+      valueReference="100663356"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="17"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 86 -->
+    <ScalarVariable
+      name="datRea.columns[13]"
+      valueReference="100663357"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="18"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 87 -->
+    <ScalarVariable
+      name="datRea.columns[14]"
+      valueReference="100663358"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="19"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 88 -->
+    <ScalarVariable
+      name="datRea.columns[15]"
+      valueReference="100663359"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="20"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 89 -->
+    <ScalarVariable
+      name="datRea.columns[16]"
+      valueReference="100663360"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="21"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 90 -->
+    <ScalarVariable
+      name="datRea.columns[17]"
+      valueReference="100663361"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="22"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 91 -->
+    <ScalarVariable
+      name="datRea.columns[18]"
+      valueReference="100663362"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="23"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 92 -->
+    <ScalarVariable
+      name="datRea.columns[19]"
+      valueReference="100663363"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="24"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 93 -->
+    <ScalarVariable
+      name="datRea.columns[20]"
+      valueReference="100663364"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="25"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 94 -->
+    <ScalarVariable
+      name="datRea.columns[21]"
+      valueReference="100663365"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="26"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 95 -->
+    <ScalarVariable
+      name="datRea.columns[22]"
+      valueReference="100663366"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="27"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 96 -->
+    <ScalarVariable
+      name="datRea.columns[23]"
+      valueReference="100663367"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="28"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 97 -->
+    <ScalarVariable
+      name="datRea.columns[24]"
+      valueReference="100663368"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="29"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 98 -->
+    <ScalarVariable
+      name="datRea.columns[25]"
+      valueReference="100663369"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="30"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 99 -->
+    <ScalarVariable
+      name="datRea.columns[26]"
+      valueReference="100663370"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="8"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 100 -->
+    <ScalarVariable
+      name="datRea.smoothness"
+      valueReference="100663371"
+      description="Smoothness of table interpolation"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Smoothness"
+        start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 101 -->
+    <ScalarVariable
+      name="datRea.extrapolation"
+      valueReference="100663372"
+      description="Extrapolation of data outside the definition range"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Extrapolation"
+        start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 102 -->
+    <ScalarVariable
+      name="datRea.verboseExtrapolation"
+      valueReference="100663373"
+      description="= true, if warning messages are to be printed if table input is outside the definition range"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 103 -->
+    <ScalarVariable
+      name="datRea.u_min"
+      valueReference="100663374"
+      description="Minimum abscissa value defined in table"
+      variability="tunable">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 104 -->
+    <ScalarVariable
+      name="datRea.u_max"
+      valueReference="100663375"
+      description="Maximum abscissa value defined in table"
+      variability="tunable">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 105 -->
+    <ScalarVariable
+      name="datRea.tableID.id"
+      valueReference="100663376"
+      variability="tunable">
+      <Integer/>
+    </ScalarVariable>
+    <!-- Index for next variable = 106 -->
+    <ScalarVariable
+      name="pAtmSel.y"
+      valueReference="100663378"
+      description="Connector of Real output signal"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="Pa"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 107 -->
+    <ScalarVariable
+      name="pAtmSel.datSou"
+      valueReference="100663377"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 108 -->
+    <ScalarVariable
+      name="pAtmSel.p"
+      valueReference="100663378"
+      description="Parameter value"
+      variability="tunable">
+      <Real
+        unit="Pa"
+        min="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 109 -->
+    <ScalarVariable
+      name="TDewPoiSel.y"
+      valueReference="369098837"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 110 -->
+    <ScalarVariable
+      name="TDewPoiSel.datSou"
+      valueReference="100663379"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 111 -->
+    <ScalarVariable
+      name="TDewPoiSel.p"
+      valueReference="100663380"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 112 -->
+    <ScalarVariable
+      name="TDewPoiSel.uFil"
+      valueReference="369098837"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 113 -->
+    <ScalarVariable
+      name="TDryBulSel.y"
+      valueReference="369098840"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"
+        min="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 114 -->
+    <ScalarVariable
+      name="TDryBulSel.datSou"
+      valueReference="100663382"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 115 -->
+    <ScalarVariable
+      name="TDryBulSel.p"
+      valueReference="100663383"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 116 -->
+    <ScalarVariable
+      name="TDryBulSel.uFil"
+      valueReference="369098840"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 117 -->
+    <ScalarVariable
+      name="TBlaSkySel.y"
+      valueReference="369098843"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 118 -->
+    <ScalarVariable
+      name="TBlaSkySel.datSou"
+      valueReference="100663385"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 119 -->
+    <ScalarVariable
+      name="TBlaSkySel.p"
+      valueReference="100663386"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 120 -->
+    <ScalarVariable
+      name="TBlaSkySel.uFil"
+      valueReference="369098843"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 121 -->
+    <ScalarVariable
+      name="relHumSel.y"
+      valueReference="369098844"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 122 -->
+    <ScalarVariable
+      name="relHumSel.datSou"
+      valueReference="100663389"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 123 -->
+    <ScalarVariable
+      name="relHumSel.p"
+      valueReference="100663390"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 124 -->
+    <ScalarVariable
+      name="relHumSel.uFil"
+      valueReference="369098844"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 125 -->
+    <ScalarVariable
+      name="opaSkyCovSel.y"
+      valueReference="369098847"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 126 -->
+    <ScalarVariable
+      name="opaSkyCovSel.datSou"
+      valueReference="100663392"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 127 -->
+    <ScalarVariable
+      name="opaSkyCovSel.p"
+      valueReference="100663393"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 128 -->
+    <ScalarVariable
+      name="opaSkyCovSel.uFil"
+      valueReference="369098847"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 129 -->
+    <ScalarVariable
+      name="ceiHeiSel.y"
+      valueReference="369098789"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 130 -->
+    <ScalarVariable
+      name="ceiHeiSel.datSou"
+      valueReference="100663394"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 131 -->
+    <ScalarVariable
+      name="ceiHeiSel.p"
+      valueReference="100663395"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 132 -->
+    <ScalarVariable
+      name="ceiHeiSel.uFil"
+      valueReference="369098789"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 133 -->
+    <ScalarVariable
+      name="totSkyCovSel.y"
+      valueReference="369098852"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 134 -->
+    <ScalarVariable
+      name="totSkyCovSel.datSou"
+      valueReference="100663397"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 135 -->
+    <ScalarVariable
+      name="totSkyCovSel.p"
+      valueReference="100663398"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 136 -->
+    <ScalarVariable
+      name="totSkyCovSel.uFil"
+      valueReference="369098852"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 137 -->
+    <ScalarVariable
+      name="winSpeSel.y"
+      valueReference="369098785"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 138 -->
+    <ScalarVariable
+      name="winSpeSel.datSou"
+      valueReference="100663399"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 139 -->
+    <ScalarVariable
+      name="winSpeSel.p"
+      valueReference="100663400"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 140 -->
+    <ScalarVariable
+      name="winSpeSel.uFil"
+      valueReference="369098785"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 141 -->
+    <ScalarVariable
+      name="winDirSel.y"
+      valueReference="369098857"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 142 -->
+    <ScalarVariable
+      name="winDirSel.datSou"
+      valueReference="100663402"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 143 -->
+    <ScalarVariable
+      name="winDirSel.p"
+      valueReference="100663403"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 144 -->
+    <ScalarVariable
+      name="winDirSel.uFil"
+      valueReference="369098857"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 145 -->
+    <ScalarVariable
+      name="horInfRadSel.y"
+      valueReference="369098799"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 146 -->
+    <ScalarVariable
+      name="horInfRadSel.datSou"
+      valueReference="100663404"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.DataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 147 -->
+    <ScalarVariable
+      name="horInfRadSel.p"
+      valueReference="100663405"
+      description="Parameter value"
+      variability="fixed">
+      <Real
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 148 -->
+    <ScalarVariable
+      name="horInfRadSel.uFil"
+      valueReference="369098799"
+      description="Input signal from file reader">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 149 -->
+    <ScalarVariable
+      name="souSelRad.datSou"
+      valueReference="100663406"
+      description="Data source"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.RadiationDataSource"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 150 -->
+    <ScalarVariable
+      name="souSelRad.HDirNorFil"
+      valueReference="369098867"
+      description="Direct normal solar irradiation from weather data file">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 151 -->
+    <ScalarVariable
+      name="souSelRad.HDifHorFil"
+      valueReference="369098866"
+      description="Diffuse horizontal solar irradiation from weather data file">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 152 -->
+    <ScalarVariable
+      name="souSelRad.HGloHorFil"
+      valueReference="369098865"
+      description="Global horizontal solar irradiation from weather data file">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 153 -->
+    <ScalarVariable
+      name="souSelRad.zen"
+      valueReference="369098918"
+      description="Zenith angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 154 -->
+    <ScalarVariable
+      name="souSelRad.HDirNor"
+      valueReference="335544324"
+      description="Direct normal solar irradiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 155 -->
+    <ScalarVariable
+      name="souSelRad.HDifHor"
+      valueReference="335544325"
+      description="Diffuse horizontal solar irradiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 156 -->
+    <ScalarVariable
+      name="souSelRad.HGloHor"
+      valueReference="335544326"
+      description="Global horizontal solar irradiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 157 -->
+    <ScalarVariable
+      name="souSelRad.epsCos"
+      valueReference="100663407"
+      description="Small value to avoid division by 0"
+      variability="constant">
+      <Real start="1E-06"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 158 -->
+    <ScalarVariable
+      name="souSelRad.solCon"
+      valueReference="100663408"
+      description="Solar constant"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.HeatFlux"
+        start="1367.7"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 159 -->
+    <ScalarVariable
+      name="souSelRad.HGloHor_in_internal"
+      valueReference="369098865"
+      description="Needed to connect to conditional connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 160 -->
+    <ScalarVariable
+      name="souSelRad.HDifHor_in_internal"
+      valueReference="369098866"
+      description="Needed to connect to conditional connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 161 -->
+    <ScalarVariable
+      name="souSelRad.HDirNor_in_internal"
+      valueReference="369098867"
+      description="Needed to connect to conditional connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="RadiantEnergyFluenceRate"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 162 -->
+    <ScalarVariable
+      name="cheTemDryBul.TIn"
+      valueReference="335544320"
+      description="Input Temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 163 -->
+    <ScalarVariable
+      name="cheTemDryBul.TDryBul"
+      valueReference="335544320"
+      description="Dry bulb temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 164 -->
+    <ScalarVariable
+      name="cheTemDryBul.TMin"
+      valueReference="16777228"
+      description="Minimum allowed temperature"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="203.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 165 -->
+    <ScalarVariable
+      name="cheTemDryBul.TMax"
+      valueReference="16777229"
+      description="Maximum allowed temperature"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="343.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 166 -->
+    <ScalarVariable
+      name="cheTemDewPoi.TIn"
+      valueReference="335544321"
+      description="Input Temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 167 -->
+    <ScalarVariable
+      name="cheTemDewPoi.TDewPoi"
+      valueReference="335544321"
+      description="Dew point temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 168 -->
+    <ScalarVariable
+      name="cheTemDewPoi.TMin"
+      valueReference="16777230"
+      description="Minimum allowed temperature"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="203.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 169 -->
+    <ScalarVariable
+      name="cheTemDewPoi.TMax"
+      valueReference="16777231"
+      description="Maximum allowed temperature"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="343.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 170 -->
+    <ScalarVariable
+      name="conRelHum.k"
+      valueReference="100663412"
+      description="Gain value multiplied with input signal"
+      variability="constant">
+      <Real
+        unit="1"
+        start="0.01"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 171 -->
+    <ScalarVariable
+      name="conRelHum.u"
+      valueReference="369098776"
+      description="Input signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 172 -->
+    <ScalarVariable
+      name="conRelHum.y"
+      valueReference="369098844"
+      description="Output signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 173 -->
+    <ScalarVariable
+      name="chePre.PIn"
+      valueReference="100663378"
+      description="Atmospheric pressure"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Pressure"
+        unit="Pa"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 174 -->
+    <ScalarVariable
+      name="chePre.pAtm"
+      valueReference="100663378"
+      description="Atmospheric pressure"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Pressure"
+        unit="Pa"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 175 -->
+    <ScalarVariable
+      name="chePre.PMin"
+      valueReference="100663413"
+      description="Minimum allowed pressure"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Pressure"
+        start="3100"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 176 -->
+    <ScalarVariable
+      name="chePre.PMax"
+      valueReference="100663414"
+      description="Maximum allowed pressure"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Pressure"
+        start="120000"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 177 -->
+    <ScalarVariable
+      name="limRelHum.uMin"
+      valueReference="100663415"
+      description="Minimum value"
+      variability="constant">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 178 -->
+    <ScalarVariable
+      name="limRelHum.uMax"
+      valueReference="100663416"
+      description="Maximum value"
+      variability="constant">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 179 -->
+    <ScalarVariable
+      name="limRelHum.u"
+      valueReference="369098844"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 180 -->
+    <ScalarVariable
+      name="limRelHum.relHum"
+      valueReference="335544323"
+      description="Relative humidity">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 181 -->
+    <ScalarVariable
+      name="limTotSkyCov.uMin"
+      valueReference="100663417"
+      description="Minimum value"
+      variability="constant">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 182 -->
+    <ScalarVariable
+      name="limTotSkyCov.uMax"
+      valueReference="100663418"
+      description="Maximum value"
+      variability="constant">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 183 -->
+    <ScalarVariable
+      name="limTotSkyCov.u"
+      valueReference="369098852"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 184 -->
+    <ScalarVariable
+      name="limTotSkyCov.nTot"
+      valueReference="335544332"
+      description="Total sky cover">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 185 -->
+    <ScalarVariable
+      name="limOpaSkyCov.uMin"
+      valueReference="100663419"
+      description="Minimum value"
+      variability="constant">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 186 -->
+    <ScalarVariable
+      name="limOpaSkyCov.uMax"
+      valueReference="100663420"
+      description="Maximum value"
+      variability="constant">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 187 -->
+    <ScalarVariable
+      name="limOpaSkyCov.u"
+      valueReference="369098847"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 188 -->
+    <ScalarVariable
+      name="limOpaSkyCov.nOpa"
+      valueReference="335544333"
+      description="Opaque sky cover">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 189 -->
+    <ScalarVariable
+      name="limCeiHei.u"
+      valueReference="369098789"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 190 -->
+    <ScalarVariable
+      name="limCeiHei.ceiHei"
+      valueReference="335544331"
+      description="Cloud cover ceiling height">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 191 -->
+    <ScalarVariable
+      name="limWinSpe.u"
+      valueReference="369098785"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 192 -->
+    <ScalarVariable
+      name="limWinSpe.winSpe"
+      valueReference="335544329"
+      description="Wind speed">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m/s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 193 -->
+    <ScalarVariable
+      name="limHorInfRad.u"
+      valueReference="369098799"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 194 -->
+    <ScalarVariable
+      name="limHorInfRad.HHorIR"
+      valueReference="335544328"
+      description="Horizontal infrared irradiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"
+        min="0.0"
+        nominal="100.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 195 -->
+    <ScalarVariable
+      name="limWinDir.uMin"
+      valueReference="100663421"
+      description="Minimum value"
+      variability="constant">
+      <Real start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 196 -->
+    <ScalarVariable
+      name="limWinDir.uMax"
+      valueReference="100663422"
+      description="Maximum value"
+      variability="constant">
+      <Real start="6.283185307179586"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 197 -->
+    <ScalarVariable
+      name="limWinDir.u"
+      valueReference="369098857"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 198 -->
+    <ScalarVariable
+      name="limWinDir.winDir"
+      valueReference="335544330"
+      description="Wind direction">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 199 -->
+    <ScalarVariable
+      name="TBlaSkyCom.calTSky"
+      valueReference="100663423"
+      description="Computation of black-body sky temperature"
+      variability="constant">
+      <Enumeration
+        declaredType="Buildings.BoundaryConditions.Types.SkyTemperatureCalculation"
+        start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 200 -->
+    <ScalarVariable
+      name="TBlaSkyCom.TDryBul"
+      valueReference="335544320"
+      description="Dry bulb temperature at ground level">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 201 -->
+    <ScalarVariable
+      name="TBlaSkyCom.TDewPoi"
+      valueReference="335544321"
+      description="Dew point temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 202 -->
+    <ScalarVariable
+      name="TBlaSkyCom.nOpa"
+      valueReference="335544333"
+      description="Opaque sky cover [0, 1]">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 203 -->
+    <ScalarVariable
+      name="TBlaSkyCom.TBlaSky"
+      valueReference="335544327"
+      description="Black-body sky temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 204 -->
+    <ScalarVariable
+      name="TBlaSkyCom.HHorIR"
+      valueReference="335544328"
+      description="Horizontal infrared irradiation">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="W/m2"
+        min="0.0"
+        nominal="100.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 205 -->
+    <ScalarVariable
+      name="TBlaSkyCom.TDewPoiK"
+      valueReference="369098880"
+      description="Dewpoint temperature">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 206 -->
+    <ScalarVariable
+      name="TBlaSkyCom.epsSky"
+      valueReference="369098881"
+      description="Black-body absorptivity of sky">
+      <Real
+        declaredType="Modelica.SIunits.Emissivity"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 207 -->
+    <ScalarVariable
+      name="TBlaSkyCom.nOpa10"
+      valueReference="369098882"
+      description="Opaque sky cover in [0, 10]">
+      <Real min="0.0"
+        max="10.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 208 -->
+    <ScalarVariable
+      name="modTim.y"
+      valueReference="335544334"
+      description="Model time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 209 -->
+    <ScalarVariable
+      name="add30Min.u1"
+      valueReference="100663427"
+      description="Connector of Real input signal 1"
+      variability="constant">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        start="1800"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 210 -->
+    <ScalarVariable
+      name="add30Min.u2"
+      valueReference="335544334"
+      description="Connector of Real input signal 2">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 211 -->
+    <ScalarVariable
+      name="add30Min.y"
+      valueReference="369098884"
+      description="Connector of Real output signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 212 -->
+    <ScalarVariable
+      name="add30Min.k1"
+      valueReference="16777232"
+      description="Gain of input signal 1"
+      causality="parameter"
+      variability="tunable">
+      <Real start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 213 -->
+    <ScalarVariable
+      name="add30Min.k2"
+      valueReference="16777233"
+      description="Gain of input signal 2"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        unit="1"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 214 -->
+    <ScalarVariable
+      name="con30Min.k"
+      valueReference="100663429"
+      description="Constant output value"
+      variability="constant">
+      <Real start="1800"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 215 -->
+    <ScalarVariable
+      name="con30Min.y"
+      valueReference="100663430"
+      description="Connector of Real output signal"
+      variability="constant">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        start="1800.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 216 -->
+    <ScalarVariable
+      name="locTim.cloTim"
+      valueReference="335544334"
+      description="Clock time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 217 -->
+    <ScalarVariable
+      name="locTim.timZon"
+      valueReference="100663431"
+      description="Time zone"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="h"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 218 -->
+    <ScalarVariable
+      name="locTim.lon"
+      valueReference="100663432"
+      description="Longitude"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 219 -->
+    <ScalarVariable
+      name="locTim.locTim"
+      valueReference="369098889"
+      description="Local civil time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 220 -->
+    <ScalarVariable
+      name="locTim.diff"
+      valueReference="100663434"
+      description="Difference between local and clock time"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 221 -->
+    <ScalarVariable
+      name="datRea30Min.nout"
+      valueReference="100663435"
+      description="Number of outputs"
+      variability="constant">
+      <Integer start="3"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 222 -->
+    <ScalarVariable
+      name="datRea30Min.u"
+      valueReference="369098892"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 223 -->
+    <ScalarVariable
+      name="datRea30Min.y[1]"
+      valueReference="369098865"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 224 -->
+    <ScalarVariable
+      name="datRea30Min.y[2]"
+      valueReference="369098867"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 225 -->
+    <ScalarVariable
+      name="datRea30Min.y[3]"
+      valueReference="369098866"
+      description="Connector of Real output signals">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="W/m2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 226 -->
+    <ScalarVariable
+      name="datRea30Min.tableOnFile"
+      valueReference="100663437"
+      description="= true, if table is defined on file or in function usertab"
+      variability="constant">
+      <Boolean start="true"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 227 -->
+    <ScalarVariable
+      name="datRea30Min.verboseRead"
+      valueReference="16777234"
+      description="= true, if info message that file is loading is to be printed"
+      causality="parameter"
+      variability="tunable">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 228 -->
+    <ScalarVariable
+      name="datRea30Min.columns[1]"
+      valueReference="100663438"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="9"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 229 -->
+    <ScalarVariable
+      name="datRea30Min.columns[2]"
+      valueReference="100663439"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 230 -->
+    <ScalarVariable
+      name="datRea30Min.columns[3]"
+      valueReference="100663440"
+      description="Columns of table to be interpolated"
+      variability="constant">
+      <Integer start="11"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 231 -->
+    <ScalarVariable
+      name="datRea30Min.smoothness"
+      valueReference="100663441"
+      description="Smoothness of table interpolation"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Smoothness"
+        start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 232 -->
+    <ScalarVariable
+      name="datRea30Min.extrapolation"
+      valueReference="100663442"
+      description="Extrapolation of data outside the definition range"
+      variability="constant">
+      <Enumeration
+        declaredType="Modelica.Blocks.Types.Extrapolation"
+        start="2"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 233 -->
+    <ScalarVariable
+      name="datRea30Min.verboseExtrapolation"
+      valueReference="100663443"
+      description="= true, if warning messages are to be printed if table input is outside the definition range"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 234 -->
+    <ScalarVariable
+      name="datRea30Min.u_min"
+      valueReference="100663444"
+      description="Minimum abscissa value defined in table"
+      variability="tunable">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 235 -->
+    <ScalarVariable
+      name="datRea30Min.u_max"
+      valueReference="100663445"
+      description="Maximum abscissa value defined in table"
+      variability="tunable">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 236 -->
+    <ScalarVariable
+      name="datRea30Min.tableID.id"
+      valueReference="100663446"
+      variability="tunable">
+      <Integer/>
+    </ScalarVariable>
+    <!-- Index for next variable = 237 -->
+    <ScalarVariable
+      name="conTimMin.weaDatStaTim"
+      valueReference="100663447"
+      description="Start time of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="d"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 238 -->
+    <ScalarVariable
+      name="conTimMin.weaDatEndTim"
+      valueReference="100663448"
+      description="End time of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="d"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 239 -->
+    <ScalarVariable
+      name="conTimMin.modTim"
+      valueReference="369098884"
+      description="Simulation time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 240 -->
+    <ScalarVariable
+      name="conTimMin.calTim"
+      valueReference="369098892"
+      description="Calendar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 241 -->
+    <ScalarVariable
+      name="conTimMin.shiftSolarRad"
+      valueReference="100663449"
+      description="Number of seconds for the shift for solar radiation calculation"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1800"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 242 -->
+    <ScalarVariable
+      name="conTimMin.lenWea"
+      valueReference="100663450"
+      description="Length of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 243 -->
+    <ScalarVariable
+      name="conTimMin.canRepeatWeatherFile"
+      valueReference="100663451"
+      description="=true, if the weather file can be repeated, since it has the length of a year or a multiple of it"
+      variability="fixed">
+      <Boolean/>
+    </ScalarVariable>
+    <!-- Index for next variable = 244 -->
+    <ScalarVariable
+      name="conTimMin.tNext"
+      valueReference="369098908"
+      description="Start time of next period"
+      variability="discrete"
+      initial="exact">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 245 -->
+    <ScalarVariable
+      name="conTim.weaDatStaTim"
+      valueReference="100663453"
+      description="Start time of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="d"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 246 -->
+    <ScalarVariable
+      name="conTim.weaDatEndTim"
+      valueReference="100663454"
+      description="End time of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        displayUnit="d"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 247 -->
+    <ScalarVariable
+      name="conTim.modTim"
+      valueReference="335544334"
+      description="Simulation time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 248 -->
+    <ScalarVariable
+      name="conTim.calTim"
+      valueReference="369098773"
+      description="Calendar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 249 -->
+    <ScalarVariable
+      name="conTim.shiftSolarRad"
+      valueReference="100663455"
+      description="Number of seconds for the shift for solar radiation calculation"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="1800"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 250 -->
+    <ScalarVariable
+      name="conTim.lenWea"
+      valueReference="100663456"
+      description="Length of weather data"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Time"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 251 -->
+    <ScalarVariable
+      name="conTim.canRepeatWeatherFile"
+      valueReference="100663457"
+      description="=true, if the weather file can be repeated, since it has the length of a year or a multiple of it"
+      variability="fixed">
+      <Boolean/>
+    </ScalarVariable>
+    <!-- Index for next variable = 252 -->
+    <ScalarVariable
+      name="conTim.tNext"
+      valueReference="369098914"
+      description="Start time of next period"
+      variability="discrete"
+      initial="exact">
+      <Real
+        declaredType="Modelica.SIunits.Time"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 253 -->
+    <ScalarVariable
+      name="eqnTim.nDay"
+      valueReference="335544334"
+      description="Zero-based day number in seconds (January 1=0, January 2=86400)">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 254 -->
+    <ScalarVariable
+      name="eqnTim.eqnTim"
+      valueReference="369098915"
+      description="Equation of time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Time"
+        unit="s"
+        displayUnit="min"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 255 -->
+    <ScalarVariable
+      name="eqnTim.Bt"
+      valueReference="369098916"
+      description="Intermediate variable">
+      <Real/>
+    </ScalarVariable>
+    <!-- Index for next variable = 256 -->
+    <ScalarVariable
+      name="solTim.locTim"
+      valueReference="369098889"
+      description="Local time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 257 -->
+    <ScalarVariable
+      name="solTim.equTim"
+      valueReference="369098917"
+      description="Equation of time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 258 -->
+    <ScalarVariable
+      name="solTim.solTim"
+      valueReference="335544335"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Time"
+        unit="s"
+        displayUnit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 259 -->
+    <ScalarVariable
+      name="conWinDir.u"
+      valueReference="369098784"
+      description="Connector of Real input signal to be converted">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 260 -->
+    <ScalarVariable
+      name="conWinDir.y"
+      valueReference="369098857"
+      description="Connector of Real output signal containing input signal u in another unit">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 261 -->
+    <ScalarVariable
+      name="conTDryBul.u"
+      valueReference="369098774"
+      description="Connector of Real input signal to be converted">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 262 -->
+    <ScalarVariable
+      name="conTDryBul.y"
+      valueReference="369098840"
+      description="Connector of Real output signal containing input signal u in another unit">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 263 -->
+    <ScalarVariable
+      name="conTDewPoi.u"
+      valueReference="369098775"
+      description="Connector of Real input signal to be converted">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 264 -->
+    <ScalarVariable
+      name="conTDewPoi.y"
+      valueReference="369098837"
+      description="Connector of Real output signal containing input signal u in another unit">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="K"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 265 -->
+    <ScalarVariable
+      name="altAng.zen"
+      valueReference="369098918"
+      description="Zenith angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 266 -->
+    <ScalarVariable
+      name="altAng.alt"
+      valueReference="335544336"
+      description="Solar altitude angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 267 -->
+    <ScalarVariable
+      name="zenAng.solHouAng"
+      valueReference="369098919"
+      description="Solar hour angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 268 -->
+    <ScalarVariable
+      name="zenAng.decAng"
+      valueReference="369098920"
+      description="Solar declination angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 269 -->
+    <ScalarVariable
+      name="zenAng.zen"
+      valueReference="335544337"
+      description="Zenith angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 270 -->
+    <ScalarVariable
+      name="zenAng.lat"
+      valueReference="100663468"
+      description="Latitude"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 271 -->
+    <ScalarVariable
+      name="decAng.nDay"
+      valueReference="335544334"
+      description="Day number with units of seconds">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 272 -->
+    <ScalarVariable
+      name="decAng.decAng"
+      valueReference="335544338"
+      description="Solar declination angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 273 -->
+    <ScalarVariable
+      name="decAng.k1"
+      valueReference="100663465"
+      description="Constant"
+      variability="constant">
+      <Real start="0.3979486313076103"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 274 -->
+    <ScalarVariable
+      name="decAng.k2"
+      valueReference="100663466"
+      description="Constant"
+      variability="constant">
+      <Real start="0.017202423838958484"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 275 -->
+    <ScalarVariable
+      name="solHouAng.solTim"
+      valueReference="369098923"
+      description="Solar time">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Time"
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 276 -->
+    <ScalarVariable
+      name="solHouAng.solHouAng"
+      valueReference="335544339"
+      description="Solar hour angle">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="Angle"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 277 -->
+    <ScalarVariable
+      name="latitude.latitude"
+      valueReference="100663468"
+      description="Latitude"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 278 -->
+    <ScalarVariable
+      name="latitude.y"
+      valueReference="100663468"
+      description="Latitude of the location"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 279 -->
+    <ScalarVariable
+      name="longitude.longitude"
+      valueReference="100663469"
+      description="Longitude"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Angle"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 280 -->
+    <ScalarVariable
+      name="longitude.y"
+      valueReference="100663469"
+      description="Longitude of the location"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="rad"
+        displayUnit="deg"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 281 -->
+    <ScalarVariable
+      name="altitude.Altitude"
+      valueReference="100663470"
+      description="Location altitude above sea level"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Length"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 282 -->
+    <ScalarVariable
+      name="altitude.y"
+      valueReference="100663470"
+      description="Location altitude above sea level"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="m"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 283 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.approximateWetBulb"
+      valueReference="100663471"
+      description="Set to true to approximate wet bulb temperature"
+      variability="constant">
+      <Boolean start="false"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 284 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.TDryBul"
+      valueReference="335544320"
+      description="Dry bulb temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"
+        min="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 285 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.phi"
+      valueReference="335544323"
+      description="Relative air humidity">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        unit="1"
+        min="0.0"
+        max="1.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 286 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.p"
+      valueReference="100663378"
+      description="Pressure"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="Pressure"
+        unit="Pa"
+        min="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 287 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.TWetBul"
+      valueReference="335544322"
+      description="Wet bulb temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        min="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 288 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.TDryBul_degC"
+      valueReference="100663472"
+      description="Dry bulb temperature in degree Celsius"
+      variability="constant">
+      <Real
+        declaredType="Modelica.SIunits.Conversions.NonSIunits.Temperature_degC"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 289 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.rh_per"
+      valueReference="100663473"
+      description="Relative humidity in percentage"
+      variability="constant">
+      <Real
+        unit="degC"
+        min="0.0"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 290 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.XiDryBul"
+      valueReference="369098930"
+      description="Water vapor mass fraction at dry bulb state">
+      <Real
+        declaredType="Modelica.SIunits.MassFraction"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 291 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.XiSat"
+      valueReference="369098931"
+      description="Water vapor mass fraction at saturation">
+      <Real
+        declaredType="Modelica.SIunits.MassFraction"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 292 -->
+    <ScalarVariable
+      name="tWetBul_TDryBulXi.XiSatRefIn"
+      valueReference="369098932"
+      description="Water vapor mass fraction at saturation, referenced to inlet mass flow rate">
+      <Real
+        declaredType="Modelica.SIunits.MassFraction"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 293 -->
+    <ScalarVariable
+      name="conTotSkyCov.k"
+      valueReference="100663477"
+      description="Gain value multiplied with input signal"
+      variability="constant">
+      <Real
+        unit="1"
+        start="0.1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 294 -->
+    <ScalarVariable
+      name="conTotSkyCov.u"
+      valueReference="369098786"
+      description="Input signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 295 -->
+    <ScalarVariable
+      name="conTotSkyCov.y"
+      valueReference="369098852"
+      description="Output signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 296 -->
+    <ScalarVariable
+      name="conOpaSkyCov.k"
+      valueReference="100663478"
+      description="Gain value multiplied with input signal"
+      variability="constant">
+      <Real
+        unit="1"
+        start="0.1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 297 -->
+    <ScalarVariable
+      name="conOpaSkyCov.u"
+      valueReference="369098787"
+      description="Input signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 298 -->
+    <ScalarVariable
+      name="conOpaSkyCov.y"
+      valueReference="369098847"
+      description="Output signal connector">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 299 -->
+    <ScalarVariable
+      name="cheTemBlaSky.TMin"
+      valueReference="16777235"
+      description="Minimum allowed temperature"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 300 -->
+    <ScalarVariable
+      name="cheTemBlaSky.TMax"
+      valueReference="16777236"
+      description="Maximum allowed temperature"
+      causality="parameter"
+      variability="fixed">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="343.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 301 -->
+    <ScalarVariable
+      name="cheTemBlaSky.TIn"
+      valueReference="335544327"
+      description="Black-body sky temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 302 -->
+    <ScalarVariable
+      name="cheTemBlaSky.TBlaSky"
+      valueReference="335544327"
+      description="Black-body sky temperature">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"/>
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="1"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="2"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="3"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="4"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="5"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="6"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="7"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="8"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="9"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="10"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="11"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="12"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="13"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="14"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="15"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="16"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="17"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="18"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="19"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="20"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="21"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="22"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="23"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="24"
+        dependencies=""
+        dependenciesKind=""/>
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="1"
+        dependencies="73 164 165"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="2"
+        dependencies="73 168 169"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="3"
+        dependencies="26 73 164 165"
+        dependenciesKind="dependent dependent dependent dependent"/>
+      <Unknown index="4"
+        dependencies="73"
+        dependenciesKind="dependent"/>
+      <Unknown index="5"
+        dependencies="212 213 227"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="6"
+        dependencies="212 213 227"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="7"
+        dependencies="212 213 227"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="8"
+        dependencies="73 164 165 168 169 299 300"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="9"
+        dependencies="73"
+        dependenciesKind="dependent"/>
+      <Unknown index="10"
+        dependencies="73"
+        dependenciesKind="dependent"/>
+      <Unknown index="11"
+        dependencies="73"
+        dependenciesKind="dependent"/>
+      <Unknown index="12"
+        dependencies="73"
+        dependenciesKind="dependent"/>
+      <Unknown index="13"
+        dependencies="73"
+        dependenciesKind="dependent"/>
+      <Unknown index="14"
+        dependencies="73"
+        dependenciesKind="dependent"/>
+      <Unknown index="15"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="16"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="17"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="18"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="19"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="20"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="21"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="22"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="23"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="24"
+        dependencies="26"
+        dependenciesKind="dependent"/>
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

@@ -1,0 +1,227 @@
+{
+  "name": "scalability",
+  "federates": [
+    {
+      "directory": ".",
+      "exec": "helics_broker -f 33 --loglevel=summary",
+      "host": "localhost",
+      "name": "broker"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment0",
+      "host": "localhost",
+      "name": "Apartment0"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV0",
+      "host": "localhost",
+      "name": "PV0"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment1",
+      "host": "localhost",
+      "name": "Apartment1"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV1",
+      "host": "localhost",
+      "name": "PV1"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment2",
+      "host": "localhost",
+      "name": "Apartment2"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV2",
+      "host": "localhost",
+      "name": "PV2"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment3",
+      "host": "localhost",
+      "name": "Apartment3"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV3",
+      "host": "localhost",
+      "name": "PV3"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment4",
+      "host": "localhost",
+      "name": "Apartment4"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV4",
+      "host": "localhost",
+      "name": "PV4"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment5",
+      "host": "localhost",
+      "name": "Apartment5"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV5",
+      "host": "localhost",
+      "name": "PV5"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment6",
+      "host": "localhost",
+      "name": "Apartment6"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV6",
+      "host": "localhost",
+      "name": "PV6"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment7",
+      "host": "localhost",
+      "name": "Apartment7"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV7",
+      "host": "localhost",
+      "name": "PV7"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment8",
+      "host": "localhost",
+      "name": "Apartment8"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV8",
+      "host": "localhost",
+      "name": "PV8"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment9",
+      "host": "localhost",
+      "name": "Apartment9"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV9",
+      "host": "localhost",
+      "name": "PV9"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment10",
+      "host": "localhost",
+      "name": "Apartment10"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV10",
+      "host": "localhost",
+      "name": "PV10"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment11",
+      "host": "localhost",
+      "name": "Apartment11"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV11",
+      "host": "localhost",
+      "name": "PV11"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment12",
+      "host": "localhost",
+      "name": "Apartment12"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV12",
+      "host": "localhost",
+      "name": "PV12"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment13",
+      "host": "localhost",
+      "name": "Apartment13"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV13",
+      "host": "localhost",
+      "name": "PV13"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment14",
+      "host": "localhost",
+      "name": "Apartment14"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV14",
+      "host": "localhost",
+      "name": "PV14"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment15",
+      "host": "localhost",
+      "name": "Apartment15"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV15",
+      "host": "localhost",
+      "name": "PV15"
+    },
+    
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Weather",
+      "host": "localhost",
+      "name": "Weather"
+    }
+  ]
+}
+  

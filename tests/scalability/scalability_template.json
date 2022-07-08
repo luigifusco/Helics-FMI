@@ -1,0 +1,32 @@
+{
+  "name": "scalability",
+  "federates": [
+    {
+      "directory": ".",
+      "exec": "helics_broker -f {{federates}} --loglevel=summary",
+      "host": "localhost",
+      "name": "broker"
+    },
+    {% for i in range(replicas) %}
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Apartment{{i}}",
+      "host": "localhost",
+      "name": "Apartment{{i}}"
+    },
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py PV{{i}}",
+      "host": "localhost",
+      "name": "PV{{i}}"
+    },
+    {% endfor %}
+    {
+      "directory": ".",
+      "exec": "python -u ../../lib/helics_fmi.py Weather",
+      "host": "localhost",
+      "name": "Weather"
+    }
+  ]
+}
+  

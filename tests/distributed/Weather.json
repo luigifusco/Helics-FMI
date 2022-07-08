@@ -1,0 +1,8 @@
+{
+    "fmu": "Weather/Weather.fmu",
+    "period": 60,
+    "total_interval": 8812800,
+    "start_time": 8640000,
+    "mappings": {},
+    "log_vars": ["weaBus.TDryBul", "weaBus.relHum", "weaBus.HDifHor", "weaBus.HDirNor", "weaBus.HGloHor", "weaBus.TBlaSky", "weaBus.alt", "weaBus.cloTim", "weaBus.lat", "weaBus.pAtm", "weaBus.solTim", "weaBus.solZen", "weaBus.winDir", "weaBus.winSpe"]
+}

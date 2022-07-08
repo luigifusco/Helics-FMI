@@ -1,6 +1,6 @@
 {
     "fmu": "PV/PV.fmu",
-    "period": 3600,
+    "period": 30,
     "total_interval": 8812800,
     "start_time": 8640000,
     "mappings": {
