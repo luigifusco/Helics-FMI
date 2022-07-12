@@ -3,37 +3,37 @@
     "federates": [
       {
         "directory": ".",
-        "exec": "helics_broker -f 9 --loglevel=warning --ipv4",
+        "exec": "helics_broker -f 7 --loglevel=warning --ipv4",
         "host": "localhost",
         "name": "broker"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py Apartment2",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment2",
         "host": "localhost",
         "name": "Apartment2"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py Apartment3",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment3",
         "host": "localhost",
         "name": "Apartment3"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py PV2",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV2",
         "host": "localhost",
         "name": "PV2"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py PV3",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV3",
         "host": "localhost",
         "name": "PV3"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py Weather",
+        "exec": "python3 -u ../../lib/helics_fmi.py Weather",
         "host": "localhost",
         "name": "Weather"
       }

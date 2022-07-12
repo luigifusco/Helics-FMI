@@ -3,25 +3,25 @@
     "federates": [
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py Apartment0 --broker=tcp://127.0.0.1:23404",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment0 --broker=tcp://127.0.0.1",
         "host": "localhost",
         "name": "Apartment0"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py Apartment1 --broker=tcp://127.0.0.1:23404",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment1 --broker=tcp://127.0.0.1",
         "host": "localhost",
         "name": "Apartment1"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py PV0 --broker=tcp://127.0.0.1:23404",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV0 --broker=tcp://127.0.0.1",
         "host": "localhost",
         "name": "PV0"
       },
       {
         "directory": ".",
-        "exec": "python -u ../../lib/helics_fmi.py PV1 --broker=tcp://127.0.0.1:23404",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV1 --broker=tcp://127.0.0.1",
         "host": "localhost",
         "name": "PV1"
       }
