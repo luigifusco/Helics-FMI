@@ -1,0 +1,42 @@
+{
+    "name": "PC1",
+    "federates": [
+      {
+        "directory": ".",
+        "exec": "helics_broker -f 5 --loglevel=warning --port=25300 --broker_address=tcp://127.0.0.1:25200",
+        "host": "localhost",
+        "name": "broker1"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment2 --broker=tcp://127.0.0.1:25300",
+        "host": "localhost",
+        "name": "Apartment2"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment3 --broker=tcp://127.0.0.1:25300",
+        "host": "localhost",
+        "name": "Apartment3"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV2 --broker=tcp://127.0.0.1:25300",
+        "host": "localhost",
+        "name": "PV2"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV3 --broker=tcp://127.0.0.1:25300",
+        "host": "localhost",
+        "name": "PV3"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Weather --broker=tcp://127.0.0.1:25300",
+        "host": "localhost",
+        "name": "Weather"
+      }
+    ]
+  }
+  

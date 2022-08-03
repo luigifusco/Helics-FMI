@@ -84,6 +84,7 @@ if __name__ == "__main__":
     h.helicsFederateInfoSetFlagOption(fedinfo, h.HELICS_FLAG_TERMINATE_ON_ERROR, True)
     for o in sys.argv:
         if o.startswith('--broker'):
+            print("CONNECTING TO: " + o.split('=')[1])
             h.helicsFederateInfoSetBroker(fedinfo, o.split('=')[1])
     fed = h.helicsCreateCombinationFederate(sim_name, fedinfo)
     ################
