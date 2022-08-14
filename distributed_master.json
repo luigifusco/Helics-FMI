@@ -9,7 +9,7 @@
       },
       {
         "directory": ".",
-        "exec": "python -u helics_fmi.py Dummy",
+        "exec": "python -u lib/helics_fmi.py Dummy",
         "host": "localhost",
         "name": "Dummy"
       }

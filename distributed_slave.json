@@ -3,7 +3,7 @@
     "federates": [
       {
         "directory": ".",
-        "exec": "python -u helics_fmi.py Yummy --broker=tcp://127.0.0.1:23404",
+        "exec": "python -u lib/helics_fmi.py Yummy --broker=tcp://127.0.0.1:23404",
         "host": "localhost",
         "name": "Yummy"
       }
