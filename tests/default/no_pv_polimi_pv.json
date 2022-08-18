@@ -1,0 +1,24 @@
+{
+    "name": "shader",
+    "federates": [
+      {
+        "directory": ".",
+        "exec": "helics_broker -f 2 --loglevel=summary",
+        "host": "localhost",
+        "name": "broker"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py ApartmentNoPV --log",
+        "host": "localhost",
+        "name": "ApartmentNoPV"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PolimiPV",
+        "host": "localhost",
+        "name": "PolimiPV"
+      }
+    ]
+  }
+  

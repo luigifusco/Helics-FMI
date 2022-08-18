@@ -1,0 +1,54 @@
+{
+    "name": "slave",
+    "federates": [
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment0 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "Apartment0"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment1 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "Apartment1"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV0 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "PV0"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV1 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "PV1"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment4 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "Apartment4"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment5 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "Apartment5"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV4 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "PV4"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV5 --broker=tcp://192.168.1.10",
+        "host": "localhost",
+        "name": "PV5"
+      }
+    ]
+  }
+  

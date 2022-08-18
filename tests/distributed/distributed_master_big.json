@@ -1,0 +1,66 @@
+{
+    "name": "master",
+    "federates": [
+      {
+        "directory": ".",
+        "exec": "helics_broker -f 9 --loglevel=connections --ipv4",
+        "host": "localhost",
+        "name": "broker"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment2",
+        "host": "localhost",
+        "name": "Apartment2"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment3",
+        "host": "localhost",
+        "name": "Apartment3"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV2",
+        "host": "localhost",
+        "name": "PV2"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV3",
+        "host": "localhost",
+        "name": "PV3"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment6",
+        "host": "localhost",
+        "name": "Apartment6"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Apartment7",
+        "host": "localhost",
+        "name": "Apartment7"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV6",
+        "host": "localhost",
+        "name": "PV6"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py PV7",
+        "host": "localhost",
+        "name": "PV7"
+      },
+      {
+        "directory": ".",
+        "exec": "python3 -u ../../lib/helics_fmi.py Weather",
+        "host": "localhost",
+        "name": "Weather"
+      }
+    ]
+  }
+  
