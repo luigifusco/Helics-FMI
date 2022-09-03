@@ -3,7 +3,7 @@
     "federates": [
       {
         "directory": ".",
-        "exec": "helics_broker -f 9 --loglevel=connections --ipv4",
+        "exec": "helics_broker -f 17 --loglevel=connections --ipv4",
         "host": "localhost",
         "name": "broker"
       },

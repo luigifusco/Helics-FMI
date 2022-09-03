@@ -1,0 +1,18 @@
+{
+    "fmu": "PV_noWeather/PV_noWeather.fmu",
+    "period": 60,
+    "total_interval": 8812800,
+    "start_time": 8640000,
+    "mappings": {
+        "powerRequired": "Apartment5/powerRequired",
+        "weaBus.HDifHor": "Weather/weaBus.HDifHor",
+        "weaBus.HDirNor": "Weather/weaBus.HDirNor",
+        "weaBus.HGloHor": "Weather/weaBus.HGloHor",
+        "weaBus.alt": "Weather/weaBus.alt",
+        "weaBus.cloTim": "Weather/weaBus.cloTim",
+        "weaBus.lat": "Weather/weaBus.lat",
+        "weaBus.solTim": "Weather/weaBus.solTim",
+        "weaBus.solZen": "Weather/weaBus.solZen"
+    },
+    "log_vars": ["powerOutputReal"]
+}

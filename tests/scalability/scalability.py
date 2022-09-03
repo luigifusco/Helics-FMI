@@ -2,9 +2,9 @@ from jinja2 import Template
 import time
 import subprocess
 
-ITER = 5
+ITER = 3
 
-replicas = [1, 2, 4, 8, 16, 32]
+replicas = [1, 2, 3, 4, 5, 6, 7, 8]
 
 with open('Apartment_template.json') as file:
     ap_template = Template(file.read())

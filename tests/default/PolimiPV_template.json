@@ -1,0 +1,9 @@
+{
+    "fmu": "PV/PV.fmu",
+    "period": {{period}},
+    "total_interval": 8812800,
+    "start_time": 8640000,
+    "mappings": {
+        "powerRequired": "ApartmentNoPV/powerRequired"
+    }
+}

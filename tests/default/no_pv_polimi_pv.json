@@ -9,7 +9,7 @@
       },
       {
         "directory": ".",
-        "exec": "python3 -u ../../lib/helics_fmi.py ApartmentNoPV --log",
+        "exec": "python3 -u ../../lib/helics_fmi.py ApartmentNoPV",
         "host": "localhost",
         "name": "ApartmentNoPV"
       },
